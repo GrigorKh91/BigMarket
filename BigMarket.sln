@@ -13,7 +13,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{6D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BigMarket.Services.CouponAPI", "BigMarket.Services.CouponAPI\BigMarket.Services.CouponAPI.csproj", "{BD03A4DE-3BC3-44FC-A058-34933888DBD8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigMarket.Web", "BigMarket.Web\BigMarket.Web.csproj", "{7EAEB7C0-50A9-49F1-8A48-1D5209A233D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BigMarket.Web", "BigMarket.Web\BigMarket.Web.csproj", "{7EAEB7C0-50A9-49F1-8A48-1D5209A233D8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigMarket.Services.AuthAPI", "BigMarket.Services.AuthAPI\BigMarket.Services.AuthAPI.csproj", "{DA94E45E-F5AC-4714-B6E3-640C8C545DDB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,6 +31,10 @@ Global
 		{7EAEB7C0-50A9-49F1-8A48-1D5209A233D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7EAEB7C0-50A9-49F1-8A48-1D5209A233D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7EAEB7C0-50A9-49F1-8A48-1D5209A233D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA94E45E-F5AC-4714-B6E3-640C8C545DDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA94E45E-F5AC-4714-B6E3-640C8C545DDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA94E45E-F5AC-4714-B6E3-640C8C545DDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA94E45E-F5AC-4714-B6E3-640C8C545DDB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -36,6 +42,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{BD03A4DE-3BC3-44FC-A058-34933888DBD8} = {6DB6E99A-1BA9-444B-874A-D620CF284C8D}
 		{7EAEB7C0-50A9-49F1-8A48-1D5209A233D8} = {EF317C20-9857-44F5-A1D3-60482C26E0D7}
+		{DA94E45E-F5AC-4714-B6E3-640C8C545DDB} = {6DB6E99A-1BA9-444B-874A-D620CF284C8D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D069BD6E-F832-4951-A15B-73FC7117E8EB}
