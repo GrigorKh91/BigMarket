@@ -2,13 +2,17 @@
 {
     public class SD // static details
     {
-        public static string CouponAPIBase {  get; set; }   
+        public static string CouponAPIBase { get; set; }
+        public static string AuthAPIBase { get; set; }
+
+        public const string RolaAdmin = "ADMIN";
+        public const string RolaCastomer = "CASTOMER";
         public enum ApiType
         {
             GET,
-            POST, 
-            PUT, 
-            DELETE   
+            POST,
+            PUT,
+            DELETE
         }
     }
 }

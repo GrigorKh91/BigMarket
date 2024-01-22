@@ -1,4 +1,4 @@
-﻿namespace BigMarket.Web.Models
+﻿namespace BigMarket.Web.Models.CouponApi
 {
     public sealed class CouponDto
     {
