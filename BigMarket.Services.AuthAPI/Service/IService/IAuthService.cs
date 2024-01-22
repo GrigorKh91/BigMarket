@@ -4,7 +4,8 @@ namespace BigMarket.Services.AuthAPI.Service.IService
 {
     public interface IAuthService
     {
-        Task<UserDto> Register(RegistrationRequestDto registrationRequestDto);
-        Task<LoginResponseDto> Login(LoginRequestDto loginRequestDto);  
+        Task<string> Register(RegistrationRequestDto registrationRequestDto);
+        Task<LoginResponseDto> Login(LoginRequestDto loginRequestDto);
+        Task<bool> AssignRole(string email, string rolename);
     }
 }

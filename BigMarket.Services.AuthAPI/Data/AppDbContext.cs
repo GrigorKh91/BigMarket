@@ -1,5 +1,4 @@
 ﻿using BigMarket.Services.AuthAPI.Models;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,7 +11,7 @@ namespace BigMarket.Services.AuthAPI.Data
 
         }
 
-        public DbSet<ApplicationUser> AplicationUsers { get; set; }  
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }  
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

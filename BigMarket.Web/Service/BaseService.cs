@@ -31,7 +31,7 @@ namespace BigMarket.Web.Service
                         Encoding.UTF8, "application/json");
                 }
 
-                HttpResponseMessage  apiResponse = null;
+                HttpResponseMessage apiResponse = null;
 
                 switch (requestDto.ApiType)
                 {

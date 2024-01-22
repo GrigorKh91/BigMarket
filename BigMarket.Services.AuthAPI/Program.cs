@@ -1,5 +1,7 @@
 using BigMarket.Services.AuthAPI.Data;
 using BigMarket.Services.AuthAPI.Models;
+using BigMarket.Services.AuthAPI.Service;
+using BigMarket.Services.AuthAPI.Service.IService;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,7 +18,8 @@ builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("AppSett
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
                           .AddEntityFrameworkStores<AppDbContext>()
                           .AddDefaultTokenProviders();
-
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
