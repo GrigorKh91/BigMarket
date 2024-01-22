@@ -1,4 +1,5 @@
 using BigMarket.Services.AuthAPI.Data;
+using BigMarket.Services.AuthAPI.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,8 +11,9 @@ builder.Services.AddDbContext<AppDbContext>(optiion =>
 {
     optiion.UseSqlServer(builder.Configuration.GetConnectionString("AuthConnection"));
 });
+builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("AppSettings:JwtOptions"));
 
-builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
                           .AddEntityFrameworkStores<AppDbContext>()
                           .AddDefaultTokenProviders();
 

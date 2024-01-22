@@ -16,7 +16,7 @@ namespace BigMarket.Web.Service
             this._httpClientFactory = httpClientFactory;
         }
 
-        public async Task<ResponseDto?> SendAsync(RequestDto requestDto)
+        public async Task<ResponseDto> SendAsync(RequestDto requestDto)
         {
             try
             {
@@ -31,7 +31,7 @@ namespace BigMarket.Web.Service
                         Encoding.UTF8, "application/json");
                 }
 
-                HttpResponseMessage? apiResponse = null;
+                HttpResponseMessage  apiResponse = null;
 
                 switch (requestDto.ApiType)
                 {

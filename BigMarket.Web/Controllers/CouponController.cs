@@ -15,8 +15,8 @@ namespace BigMarket.Web.Controllers
      
         public async Task<IActionResult> CouponIndex()
         {
-            List<CouponDto>? list = new List<CouponDto>();
-            ResponseDto? response = await _couponService.GetAllCouponsAsync();
+            List<CouponDto> list = new List<CouponDto>();
+            ResponseDto response = await _couponService.GetAllCouponsAsync();
             if (response != null && response.IsSuccess)
             {
                 list = JsonConvert.DeserializeObject<List<CouponDto>>(Convert.ToString(response.Result));
@@ -30,7 +30,7 @@ namespace BigMarket.Web.Controllers
         }
 
 
-        public async Task<IActionResult> CouponCreate()
+        public IActionResult CouponCreate()
         {
             return View();
         }
@@ -40,7 +40,7 @@ namespace BigMarket.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                ResponseDto? response = await _couponService.CreateCouponAsync(model);
+                ResponseDto response = await _couponService.CreateCouponAsync(model);
                 if (response != null && response.IsSuccess)
                 {
                     TempData["success"] = "Coupon created successfully";
@@ -58,10 +58,10 @@ namespace BigMarket.Web.Controllers
 
         public async Task<IActionResult> CouponDelete(int couponId)
         {
-            ResponseDto? response = await _couponService.GetCouponByIdAsync(couponId);
+            ResponseDto response = await _couponService.GetCouponByIdAsync(couponId);
             if (response != null && response.IsSuccess)
             {
-                CouponDto? model = JsonConvert.DeserializeObject<CouponDto>(Convert.ToString(response.Result));
+                CouponDto model = JsonConvert.DeserializeObject<CouponDto>(Convert.ToString(response.Result));
                 return View(model);
             }
             else
@@ -74,7 +74,7 @@ namespace BigMarket.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> CouponDelete(CouponDto model)
         {
-            ResponseDto? response = await _couponService.DeleteCouponAsync(model.CouponId);
+            ResponseDto response = await _couponService.DeleteCouponAsync(model.CouponId);
             if (response != null && response.IsSuccess)
             {
                 TempData["success"] = "Coupon deleted successfully";

@@ -13,7 +13,7 @@ namespace BigMarket.Web.Service
             _baseService = baseService;
         }
 
-        public async Task<ResponseDto?> CreateCouponAsync(CouponDto couponDto)
+        public async Task<ResponseDto> CreateCouponAsync(CouponDto couponDto)
         {
             return await _baseService.SendAsync(new RequestDto()
             {
@@ -23,7 +23,7 @@ namespace BigMarket.Web.Service
             });
         }
 
-        public async Task<ResponseDto?> DeleteCouponAsync(int id)
+        public async Task<ResponseDto> DeleteCouponAsync(int id)
         {
             return await _baseService.SendAsync(new RequestDto()
             {
@@ -32,7 +32,7 @@ namespace BigMarket.Web.Service
             });
         }
 
-        public async Task<ResponseDto?> GetAllCouponsAsync()
+        public async Task<ResponseDto> GetAllCouponsAsync()
         {
             return await _baseService.SendAsync(new RequestDto()
             {
@@ -41,7 +41,7 @@ namespace BigMarket.Web.Service
             });
         }
 
-        public async Task<ResponseDto?> GetCouponAsync(string couponCode)
+        public async Task<ResponseDto> GetCouponAsync(string couponCode)
         {
             return await _baseService.SendAsync(new RequestDto()
             {
@@ -50,7 +50,7 @@ namespace BigMarket.Web.Service
             });
         }
 
-        public async Task<ResponseDto?> GetCouponByIdAsync(int id)
+        public async Task<ResponseDto> GetCouponByIdAsync(int id)
         {
             return await _baseService.SendAsync(new RequestDto()
             {
@@ -59,7 +59,7 @@ namespace BigMarket.Web.Service
             });
         }
 
-        public async Task<ResponseDto?> UpdateCouponAsync(CouponDto couponDto)
+        public async Task<ResponseDto> UpdateCouponAsync(CouponDto couponDto)
         {
             return await _baseService.SendAsync(new RequestDto()
             {
