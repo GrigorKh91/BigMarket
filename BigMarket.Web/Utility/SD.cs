@@ -7,6 +7,7 @@
 
         public const string RolaAdmin = "ADMIN";
         public const string RolaCastomer = "CASTOMER";
+        public const string TokenCookie = "JWTToken";
         public enum ApiType
         {
             GET,

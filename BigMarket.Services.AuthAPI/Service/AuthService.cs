@@ -69,7 +69,7 @@ namespace BigMarket.Services.AuthAPI.Service
             return loginResponseDto;
         }
 
-        public async Task<string> Register(RegistrationRequestDto registrationRequestDto)
+        public async Task<string> Register(RegistrationRequestDto registrationRequestDto) // TODO add nullcheck
         {
             ApplicationUser user = new()
             {

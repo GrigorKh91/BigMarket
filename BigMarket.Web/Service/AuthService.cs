@@ -35,6 +35,7 @@ namespace BigMarket.Web.Service
 
         public async Task<ResponseDto> RegisterAsync(RegistrationRequestDto registrationRequestDto)
         {
+            ArgumentNullException.ThrowIfNull(registrationRequestDto);
             return await _baseService.SendAsync(new RequestDto()
             {
                 ApiType = SD.ApiType.POST,
