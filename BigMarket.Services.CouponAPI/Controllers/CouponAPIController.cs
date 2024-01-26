@@ -2,12 +2,14 @@
 using BigMarket.Services.CouponAPI.Data;
 using BigMarket.Services.CouponAPI.Models;
 using BigMarket.Services.CouponAPI.Models.Dto;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BigMarket.Services.CouponAPI.Controllers
 {
     [Route("api/coupon")]
     [ApiController]
+    [Authorize]
     public class CouponAPIController : ControllerBase
     {
         private readonly AppDbContext _db;
@@ -69,6 +71,7 @@ namespace BigMarket.Services.CouponAPI.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "ADMIN")]  // TODO change from hatd code
         public ResponseDto Post([FromBody] CouponDto couponDto)
         {
             try
@@ -87,6 +90,7 @@ namespace BigMarket.Services.CouponAPI.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "ADMIN")]  // TODO change from hatd code
         public ResponseDto Put([FromBody] CouponDto couponDto)
         {
             try
@@ -106,6 +110,7 @@ namespace BigMarket.Services.CouponAPI.Controllers
 
         [HttpDelete]
         [Route("{id:int}")]
+        [Authorize(Roles = "ADMIN")]  // TODO change from hatd code
         public ResponseDto Delete(int id)
         {
             try

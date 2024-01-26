@@ -15,33 +15,36 @@ namespace BigMarket.Web.Service
         }
         public async Task<ResponseDto> AssignRoleAsync(RegistrationRequestDto registrationRequestDto)
         {
-            return await _baseService.SendAsync(new RequestDto()
+            var request = new RequestDto()
             {
                 ApiType = SD.ApiType.POST,
                 Data = registrationRequestDto,
                 Url = SD.AuthAPIBase + "/api/auth/AssignRole"
-            });
+            };
+            return await _baseService.SendAsync(request, withBearer: false);
         }
 
         public async Task<ResponseDto> LoginAsync(LoginRequestDto loginRequestDto)
         {
-            return await _baseService.SendAsync(new RequestDto()
+            var request = new RequestDto()
             {
                 ApiType = SD.ApiType.POST,
                 Data = loginRequestDto,
                 Url = SD.AuthAPIBase + "/api/auth/login"
-            });
+            };
+            return await _baseService.SendAsync(request, withBearer: false);
         }
 
         public async Task<ResponseDto> RegisterAsync(RegistrationRequestDto registrationRequestDto)
         {
-            ArgumentNullException.ThrowIfNull(registrationRequestDto);
-            return await _baseService.SendAsync(new RequestDto()
+            ArgumentNullException.ThrowIfNull(registrationRequestDto); // TODO check need or not
+            var request = new RequestDto()
             {
                 ApiType = SD.ApiType.POST,
                 Data = registrationRequestDto,
                 Url = SD.AuthAPIBase + "/api/auth/register"
-            });
+            };
+            return await _baseService.SendAsync(request, withBearer: false);
         }
     }
 }

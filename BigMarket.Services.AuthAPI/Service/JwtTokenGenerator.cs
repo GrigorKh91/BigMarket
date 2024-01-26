@@ -17,7 +17,7 @@ namespace BigMarket.Services.AuthAPI.Service
             _jwtOptions = jwtOptions.Value;
         }
 
-        public string GenerateToken(ApplicationUser applicationUser)
+        public string GenerateToken(ApplicationUser applicationUser, IEnumerable<string> rols)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_jwtOptions.Secret);
@@ -28,7 +28,7 @@ namespace BigMarket.Services.AuthAPI.Service
                  new Claim(JwtRegisteredClaimNames.Sub,applicationUser.Id),
                  new Claim(JwtRegisteredClaimNames.Name,applicationUser.Email)
             };
-
+            claimList.AddRange(rols.Select(role => new Claim(ClaimTypes.Role, role)));
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Audience = _jwtOptions.Audience,

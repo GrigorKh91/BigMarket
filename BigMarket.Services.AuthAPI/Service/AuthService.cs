@@ -51,8 +51,8 @@ namespace BigMarket.Services.AuthAPI.Service
             {
                 return new LoginResponseDto { Token = string.Empty }; // TODO check response Token = string.Empty
             }
-
-            string token = _jwtTokenGenerator.GenerateToken(user);
+            var roles = await _userManager.GetRolesAsync(user);
+            string token = _jwtTokenGenerator.GenerateToken(user, roles);
 
             UserDto userDto = new()
             {

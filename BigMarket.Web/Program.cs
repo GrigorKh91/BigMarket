@@ -1,6 +1,7 @@
 using BigMarket.Web.Service;
 using BigMarket.Web.Service.IService;
 using BigMarket.Web.Utility;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +19,13 @@ builder.Services.AddScoped<IBaseService, BaseService>();
 builder.Services.AddScoped<ICouponService, CouponService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ITokenProvider, TokenProvider>();
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(option =>
+    {
+        option.ExpireTimeSpan = TimeSpan.FromHours(10);
+        option.LoginPath = "/Auth/Login";
+        option.AccessDeniedPath = "/Auth/AccessDeniet";
+    });
 
 var app = builder.Build();
 
@@ -33,7 +41,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

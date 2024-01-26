@@ -2,6 +2,7 @@
 using BigMarket.Web.Models.AuthApi;
 using BigMarket.Web.Service.IService;
 using BigMarket.Web.Utility;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -46,7 +47,7 @@ namespace BigMarket.Web.Controllers
             }
             else
             {
-                ModelState.AddModelError("CustomError", responseDto.Message);
+                TempData["error"] = responseDto?.Message; ;
                 return View(obj);
             }
         }
@@ -83,6 +84,7 @@ namespace BigMarket.Web.Controllers
                     return RedirectToAction(nameof(Login));
                 }
             }
+           
             var roleList = new List<SelectListItem>()
             {
                 new SelectListItem { Text=SD.RolaAdmin, Value= SD.RolaAdmin },
@@ -93,9 +95,11 @@ namespace BigMarket.Web.Controllers
             return View(obj);
         }
 
-        public IActionResult Logout()
+        public async Task<IActionResult> Logout()
         {
-            return View();
+            await HttpContext.SignOutAsync();
+            _tokenProvider.ClearToken();
+            return RedirectToAction("Index", "Home");
         }
 
 
@@ -111,8 +115,15 @@ namespace BigMarket.Web.Controllers
                 jwt.Claims.FirstOrDefault(u => u.Type == JwtRegisteredClaimNames.Sub).Value));
             identity.AddClaim(new Claim(JwtRegisteredClaimNames.Name,
                 jwt.Claims.FirstOrDefault(u => u.Type == JwtRegisteredClaimNames.Name).Value));
-            identity.AddClaim(new Claim(JwtRegisteredClaimNames.Email,
+
+            identity.AddClaim(new Claim(ClaimTypes.Name,
                 jwt.Claims.FirstOrDefault(u => u.Type == JwtRegisteredClaimNames.Email).Value));
+
+            identity.AddClaim(new Claim(ClaimTypes.Role,
+               jwt.Claims.FirstOrDefault(u => u.Type == "role").Value)); //TODO change from hard code
+
+            var principal = new ClaimsPrincipal(identity);
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
         }
     }
 }

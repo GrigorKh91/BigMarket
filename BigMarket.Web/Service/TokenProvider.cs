@@ -4,7 +4,7 @@ using Newtonsoft.Json.Linq;
 
 namespace BigMarket.Web.Service
 {
-    public class TokenProvider : ITokenProvider
+    public sealed class TokenProvider : ITokenProvider
     {
         private readonly IHttpContextAccessor _contextAccessor;
         public TokenProvider(IHttpContextAccessor contextAccessor)
@@ -21,7 +21,7 @@ namespace BigMarket.Web.Service
         {
             string token = null;
             bool? hasToken = _contextAccessor.HttpContext?.Request.Cookies.TryGetValue(SD.TokenCookie, out token);
-            return hasToken is true ? token : null; 
+            return hasToken is true ? token : null;
         }
 
         public void SetToken(string token)
