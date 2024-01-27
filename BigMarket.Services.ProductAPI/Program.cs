@@ -1,8 +1,7 @@
-using BigMarket.Services.AuthAPI.Data;
-using BigMarket.Services.AuthAPI.Models;
-using BigMarket.Services.AuthAPI.Service;
-using BigMarket.Services.AuthAPI.Service.IService;
-using Microsoft.AspNetCore.Identity;
+using AutoMapper;
+using BigMarket.Services.ProductAPI;
+using BigMarket.Services.ProductAPI.Data;
+using BigMarket.Services.ProductAPI.Extentions;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,20 +10,20 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<AppDbContext>(optiion =>
 {
-    optiion.UseSqlServer(builder.Configuration.GetConnectionString("AuthConnection"));
+    optiion.UseSqlServer(builder.Configuration.GetConnectionString("CouponConnection"));
 });
-builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("AppSettings:JwtOptions"));
+IMapper mapper = MappingConfig.RegisterMaps().CreateMapper();
+builder.Services.AddSingleton(mapper);
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
-                          .AddEntityFrameworkStores<AppDbContext>()
-                          .AddDefaultTokenProviders();
-builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
+builder.AddSwaggerConfiguration();
+builder.AddAppAuthentication();
+
+builder.Services.AddAuthentication();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

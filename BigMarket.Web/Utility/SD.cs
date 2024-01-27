@@ -3,6 +3,7 @@
     public sealed class SD // static details
     {
         public static string CouponAPIBase { get; set; }
+        public static string ProductAPIBase { get; set; }
         public static string AuthAPIBase { get; set; }
 
         public const string RolaAdmin = "ADMIN";

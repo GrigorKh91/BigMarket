@@ -6,16 +6,10 @@ namespace BigMarket.Services.AuthAPI.Controllers
 {
     [Route("api/auth")]
     [ApiController]
-    public class AuthAPIController : ControllerBase
+    public class AuthAPIController(IAuthService authService) : ControllerBase
     {
-        private readonly IAuthService _authService;
-        private readonly ResponseDto _response;
-
-        public AuthAPIController(IAuthService authService)
-        {
-            _authService = authService;
-            _response = new();
-        }
+        private readonly IAuthService _authService = authService;
+        private readonly ResponseDto _response = new();
 
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegistrationRequestDto model)

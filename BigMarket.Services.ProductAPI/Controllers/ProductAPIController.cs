@@ -1,16 +1,16 @@
 ﻿using AutoMapper;
-using BigMarket.Services.CouponAPI.Data;
-using BigMarket.Services.CouponAPI.Models;
-using BigMarket.Services.CouponAPI.Models.Dto;
+using BigMarket.Services.ProductAPI.Data;
+using BigMarket.Services.ProductAPI.Models;
+using BigMarket.Services.ProductAPI.Models.Dto;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BigMarket.Services.CouponAPI.Controllers
+namespace BigMarket.Services.ProductAPI.Controllers
 {
-    [Route("api/coupon")]
+    [Route("api/product")]
     [ApiController]
     [Authorize]
-    public class CouponAPIController(AppDbContext db, IMapper mapper) : ControllerBase
+    public class ProductAPIController(AppDbContext db, IMapper mapper) : ControllerBase
     {
         private readonly AppDbContext _db = db;
         private readonly ResponseDto _response = new();
@@ -21,8 +21,8 @@ namespace BigMarket.Services.CouponAPI.Controllers
         {
             try
             {
-                IEnumerable<Coupon> couponList = _db.Coupons.ToList();
-                _response.Result = _mapper.Map<IEnumerable<CouponDto>>(couponList);
+                IEnumerable<Product> ProductList = _db.Products.ToList();
+                _response.Result = _mapper.Map<IEnumerable<ProductDto>>(ProductList);
             }
             catch (Exception ex)
             {
@@ -37,24 +37,8 @@ namespace BigMarket.Services.CouponAPI.Controllers
         {
             try
             {
-                var coupon = _db.Coupons.First(c => c.CouponId == id);
-                _response.Result = _mapper.Map<CouponDto>(coupon);
-            }
-            catch (Exception ex)
-            {
-                _response.IsSuccess = false;
-                _response.Message = ex.Message;
-            }
-            return _response;
-        }
-
-        [HttpGet("GetByCode/{code}")]
-        public ResponseDto GetByCode(string code)
-        {
-            try
-            {
-                var coupon = _db.Coupons.First(c => c.CouponCode.Equals(code, StringComparison.CurrentCultureIgnoreCase));
-                _response.Result = _mapper.Map<CouponDto>(coupon);
+                var Product = _db.Products.First(c => c.ProductId == id);
+                _response.Result = _mapper.Map<ProductDto>(Product);
             }
             catch (Exception ex)
             {
@@ -66,14 +50,14 @@ namespace BigMarket.Services.CouponAPI.Controllers
 
         [HttpPost]
         [Authorize(Roles = "ADMIN")]  // TODO change from hatd code
-        public ResponseDto Post([FromBody] CouponDto couponDto)
+        public ResponseDto Post([FromBody] ProductDto ProductDto)
         {
             try
             {
-                Coupon coupon = _mapper.Map<Coupon>(couponDto);
-                _db.Coupons.Add(coupon);
+                Product Product = _mapper.Map<Product>(ProductDto);
+                _db.Products.Add(Product);
                 _db.SaveChanges();
-                _response.Result = couponDto;
+                _response.Result = ProductDto;
             }
             catch (Exception ex)
             {
@@ -85,14 +69,14 @@ namespace BigMarket.Services.CouponAPI.Controllers
 
         [HttpPut]
         [Authorize(Roles = "ADMIN")]  // TODO change from hatd code
-        public ResponseDto Put([FromBody] CouponDto couponDto)
+        public ResponseDto Put([FromBody] ProductDto ProductDto)
         {
             try
             {
-                Coupon coupon = _mapper.Map<Coupon>(couponDto);
-                _db.Coupons.Update(coupon);
+                Product Product = _mapper.Map<Product>(ProductDto);
+                _db.Products.Update(Product);
                 _db.SaveChanges();
-                _response.Result = couponDto;
+                _response.Result = ProductDto;
             }
             catch (Exception ex)
             {
@@ -109,8 +93,8 @@ namespace BigMarket.Services.CouponAPI.Controllers
         {
             try
             {
-                Coupon coupon = _db.Coupons.First(c => c.CouponId == id);
-                _db.Coupons.Remove(coupon);
+                Product Product = _db.Products.First(c => c.ProductId == id);
+                _db.Products.Remove(Product);
                 _db.SaveChanges();
             }
             catch (Exception ex)

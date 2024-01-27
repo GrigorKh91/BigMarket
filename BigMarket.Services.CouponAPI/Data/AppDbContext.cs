@@ -3,12 +3,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BigMarket.Services.CouponAPI.Data
 {
-    public sealed class AppDbContext : DbContext
+    public sealed class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
     {
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
-        {
-
-        }
         public DbSet<Coupon> Coupons { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -3,7 +3,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
 
-namespace BigMarket.Services.CouponAPI.Extentions
+namespace BigMarket.Services.ProductAPI.Extentions
 {
     internal static class WebApplicationBuilderExtentions
     {

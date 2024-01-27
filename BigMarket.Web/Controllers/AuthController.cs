@@ -12,16 +12,11 @@ using System.Security.Claims;
 
 namespace BigMarket.Web.Controllers
 {
-    public class AuthController : Controller
+    public class AuthController(IAuthService authService, ITokenProvider tokenProvider) : Controller
     {
 
-        private readonly IAuthService _authService;
-        private readonly ITokenProvider _tokenProvider;
-        public AuthController(IAuthService authService, ITokenProvider tokenProvider)
-        {
-            _authService = authService;
-            _tokenProvider = tokenProvider;
-        }
+        private readonly IAuthService _authService = authService;
+        private readonly ITokenProvider _tokenProvider = tokenProvider;
 
         [HttpGet]
         public IActionResult Login()
@@ -58,8 +53,8 @@ namespace BigMarket.Web.Controllers
         {
             var roleList = new List<SelectListItem>()
             {
-                new SelectListItem { Text=SD.RolaAdmin, Value= SD.RolaAdmin },
-                new SelectListItem { Text=SD.RolaCastomer, Value= SD.RolaCastomer },
+                new() { Text=SD.RolaAdmin, Value= SD.RolaAdmin },
+                new () { Text=SD.RolaCastomer, Value= SD.RolaCastomer },
             };
             ViewBag.RoleList = roleList;
 
@@ -84,11 +79,11 @@ namespace BigMarket.Web.Controllers
                     return RedirectToAction(nameof(Login));
                 }
             }
-           
+
             var roleList = new List<SelectListItem>()
             {
-                new SelectListItem { Text=SD.RolaAdmin, Value= SD.RolaAdmin },
-                new SelectListItem { Text=SD.RolaCastomer, Value= SD.RolaCastomer },
+                new () { Text=SD.RolaAdmin, Value= SD.RolaAdmin },
+                new () { Text=SD.RolaCastomer, Value= SD.RolaCastomer },
             };
             ViewBag.RoleList = roleList;
             TempData["error"] = result?.Message;
