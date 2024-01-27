@@ -1,0 +1,6 @@
+@BigMarket.Services.ShoppingCartAPI_HostAddress = http://localhost:5171
+
+GET {{BigMarket.Services.ShoppingCartAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

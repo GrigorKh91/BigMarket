@@ -51,8 +51,6 @@ namespace BigMarket.Web.Controllers
             return View(model);
         }
 
-
-
         public async Task<IActionResult> ProductDelete(int productId)
         {
             ResponseDto response = await _productService.GetProductByIdAsync(productId);

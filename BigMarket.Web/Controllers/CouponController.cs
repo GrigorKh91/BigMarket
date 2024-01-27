@@ -56,7 +56,6 @@ namespace BigMarket.Web.Controllers
         }
 
 
-
         public async Task<IActionResult> CouponDelete(int couponId)
         {
             ResponseDto response = await _couponService.GetCouponByIdAsync(couponId);

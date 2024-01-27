@@ -10,6 +10,5 @@ namespace BigMarket.Web.Service.IService
         Task<ResponseDto> CreateProductAsync(ProductDto ProductDto);
         Task<ResponseDto> UpdateProductAsync(ProductDto ProductDto);
         Task<ResponseDto> DeleteProductAsync(int id);
-
     }
 }

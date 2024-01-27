@@ -25,7 +25,6 @@ namespace BigMarket.Web.Controllers
             return View(loginRequestDto);
         }
 
-
         [HttpPost]
         public async Task<IActionResult> Login(LoginRequestDto obj)
         {
@@ -46,7 +45,6 @@ namespace BigMarket.Web.Controllers
                 return View(obj);
             }
         }
-
 
         [HttpGet]
         public IActionResult Register()
@@ -96,7 +94,6 @@ namespace BigMarket.Web.Controllers
             _tokenProvider.ClearToken();
             return RedirectToAction("Index", "Home");
         }
-
 
         private async Task SignInUser(LoginResponseDto model)
         {
