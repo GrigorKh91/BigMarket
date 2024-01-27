@@ -4,12 +4,12 @@ using BigMarket.Services.ProductAPI.Models;
 using BigMarket.Services.ProductAPI.Models.Dto;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BigMarket.Services.ProductAPI.Controllers
 {
     [Route("api/product")]
-    [ApiController]
-    [Authorize]
+    [ApiController] 
     public class ProductAPIController(AppDbContext db, IMapper mapper) : ControllerBase
     {
         private readonly AppDbContext _db = db;
@@ -33,11 +33,11 @@ namespace BigMarket.Services.ProductAPI.Controllers
         }
 
         [HttpGet("{id:int}")]
-        public ResponseDto Get(int id)
+        public async Task<ResponseDto> Get(int id)
         {
             try
             {
-                var Product = _db.Products.First(c => c.ProductId == id);
+                var Product = await _db.Products.FirstAsync(c => c.ProductId == id);
                 _response.Result = _mapper.Map<ProductDto>(Product);
             }
             catch (Exception ex)
@@ -49,14 +49,14 @@ namespace BigMarket.Services.ProductAPI.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "ADMIN")]  // TODO change from hatd code
-        public ResponseDto Post([FromBody] ProductDto ProductDto)
+        [Authorize(Roles = "ADMIN")]  // TODO change from had code
+        public async Task<ResponseDto> Post([FromBody] ProductDto ProductDto)
         {
             try
             {
                 Product Product = _mapper.Map<Product>(ProductDto);
-                _db.Products.Add(Product);
-                _db.SaveChanges();
+                await _db.Products.AddAsync(Product);
+                await _db.SaveChangesAsync();
                 _response.Result = ProductDto;
             }
             catch (Exception ex)
@@ -74,7 +74,7 @@ namespace BigMarket.Services.ProductAPI.Controllers
             try
             {
                 Product Product = _mapper.Map<Product>(ProductDto);
-                _db.Products.Update(Product);
+                _db.Products.Update(Product);// TODO check need or not async
                 _db.SaveChanges();
                 _response.Result = ProductDto;
             }
@@ -94,7 +94,7 @@ namespace BigMarket.Services.ProductAPI.Controllers
             try
             {
                 Product Product = _db.Products.First(c => c.ProductId == id);
-                _db.Products.Remove(Product);
+                _db.Products.Remove(Product);// TODO check need or not async
                 _db.SaveChanges();
             }
             catch (Exception ex)

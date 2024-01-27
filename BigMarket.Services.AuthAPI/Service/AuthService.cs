@@ -6,27 +6,19 @@ using Microsoft.AspNetCore.Identity;
 
 namespace BigMarket.Services.AuthAPI.Service
 {
-    public sealed class AuthService : IAuthService
+    public sealed class AuthService(AppDbContext db,
+                                    UserManager<ApplicationUser> userManager,
+                                    RoleManager<IdentityRole> roleManager,
+                                    IJwtTokenGenerator jwtTokenGenerator) : IAuthService
     {
-        private readonly AppDbContext _db;
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly IJwtTokenGenerator _jwtTokenGenerator;
-        public AuthService(AppDbContext db,
-                                        UserManager<ApplicationUser> userManager,
-                                        RoleManager<IdentityRole> roleManager,
-                                        IJwtTokenGenerator jwtTokenGenerator)
-        {
-            _db = db;
-            _userManager = userManager;
-            _roleManager = roleManager;
-            _jwtTokenGenerator = jwtTokenGenerator;
-        }
+        private readonly AppDbContext _db = db;
+        private readonly UserManager<ApplicationUser> _userManager = userManager;
+        private readonly RoleManager<IdentityRole> _roleManager = roleManager;
+        private readonly IJwtTokenGenerator _jwtTokenGenerator = jwtTokenGenerator;
 
         public async Task<bool> AssignRole(string email, string roleName)
         {
-            var user = _db.ApplicationUsers.FirstOrDefault(u => u.Email.ToLower()
-                                                                                      == email.ToLower());
+            var user = _db.ApplicationUsers.FirstOrDefault(u => u.Email.Equals(email, StringComparison.CurrentCultureIgnoreCase));
             if (user != null)
             {
                 bool existRole = await _roleManager.RoleExistsAsync(roleName);
@@ -43,8 +35,7 @@ namespace BigMarket.Services.AuthAPI.Service
 
         public async Task<LoginResponseDto> Login(LoginRequestDto loginRequestDto) // TODO check order of check and null
         {
-            var user = _db.ApplicationUsers.FirstOrDefault(u => u.UserName.ToLower()
-                                                                                      == loginRequestDto.UserName.ToLower());
+            var user = _db.ApplicationUsers.FirstOrDefault(u => u.UserName.Equals(loginRequestDto.UserName, StringComparison.CurrentCultureIgnoreCase));
 
             bool isValid = await _userManager.CheckPasswordAsync(user, loginRequestDto.Password);
             if (user == null || !isValid)

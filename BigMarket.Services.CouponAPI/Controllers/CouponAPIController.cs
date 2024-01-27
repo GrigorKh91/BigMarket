@@ -4,6 +4,7 @@ using BigMarket.Services.CouponAPI.Models;
 using BigMarket.Services.CouponAPI.Models.Dto;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BigMarket.Services.CouponAPI.Controllers
 {
@@ -17,11 +18,11 @@ namespace BigMarket.Services.CouponAPI.Controllers
         private readonly IMapper _mapper = mapper;
 
         [HttpGet]
-        public ResponseDto Get()
+        public async Task<ResponseDto> Get()
         {
             try
             {
-                IEnumerable<Coupon> couponList = _db.Coupons.ToList();
+                IEnumerable<Coupon> couponList = await _db.Coupons.ToListAsync();
                 _response.Result = _mapper.Map<IEnumerable<CouponDto>>(couponList);
             }
             catch (Exception ex)
@@ -33,11 +34,11 @@ namespace BigMarket.Services.CouponAPI.Controllers
         }
 
         [HttpGet("{id:int}")]
-        public ResponseDto Get(int id)
+        public async Task<ResponseDto> Get(int id)
         {
             try
             {
-                var coupon = _db.Coupons.First(c => c.CouponId == id);
+                var coupon = await _db.Coupons.FirstAsync(c => c.CouponId == id);
                 _response.Result = _mapper.Map<CouponDto>(coupon);
             }
             catch (Exception ex)
@@ -49,11 +50,11 @@ namespace BigMarket.Services.CouponAPI.Controllers
         }
 
         [HttpGet("GetByCode/{code}")]
-        public ResponseDto GetByCode(string code)
+        public async Task<ResponseDto> GetByCode(string code)
         {
             try
             {
-                var coupon = _db.Coupons.First(c => c.CouponCode.Equals(code, StringComparison.CurrentCultureIgnoreCase));
+                var coupon = await _db.Coupons.FirstAsync(c => c.CouponCode.Equals(code, StringComparison.CurrentCultureIgnoreCase));
                 _response.Result = _mapper.Map<CouponDto>(coupon);
             }
             catch (Exception ex)
@@ -66,13 +67,13 @@ namespace BigMarket.Services.CouponAPI.Controllers
 
         [HttpPost]
         [Authorize(Roles = "ADMIN")]  // TODO change from hatd code
-        public ResponseDto Post([FromBody] CouponDto couponDto)
+        public async Task<ResponseDto> Post([FromBody] CouponDto couponDto)
         {
             try
             {
                 Coupon coupon = _mapper.Map<Coupon>(couponDto);
-                _db.Coupons.Add(coupon);
-                _db.SaveChanges();
+                await _db.Coupons.AddAsync(coupon);
+                await _db.SaveChangesAsync();
                 _response.Result = couponDto;
             }
             catch (Exception ex)
@@ -85,12 +86,12 @@ namespace BigMarket.Services.CouponAPI.Controllers
 
         [HttpPut]
         [Authorize(Roles = "ADMIN")]  // TODO change from hatd code
-        public ResponseDto Put([FromBody] CouponDto couponDto)
+        public ResponseDto Put([FromBody] CouponDto couponDto) 
         {
             try
             {
                 Coupon coupon = _mapper.Map<Coupon>(couponDto);
-                _db.Coupons.Update(coupon);
+                _db.Coupons.Update(coupon);  // TODO check need or not async
                 _db.SaveChanges();
                 _response.Result = couponDto;
             }
@@ -110,7 +111,7 @@ namespace BigMarket.Services.CouponAPI.Controllers
             try
             {
                 Coupon coupon = _db.Coupons.First(c => c.CouponId == id);
-                _db.Coupons.Remove(coupon);
+                _db.Coupons.Remove(coupon); // TODO check need or not async
                 _db.SaveChanges();
             }
             catch (Exception ex)
