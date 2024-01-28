@@ -18,7 +18,7 @@ namespace BigMarket.Services.AuthAPI.Service
 
         public async Task<bool> AssignRole(string email, string roleName)
         {
-            var user = _db.ApplicationUsers.FirstOrDefault(u => u.Email.Equals(email, StringComparison.CurrentCultureIgnoreCase));
+            var user = _db.ApplicationUsers.FirstOrDefault(u => u.Email==email);
             if (user != null)
             {
                 bool existRole = await _roleManager.RoleExistsAsync(roleName);
@@ -35,7 +35,7 @@ namespace BigMarket.Services.AuthAPI.Service
 
         public async Task<LoginResponseDto> Login(LoginRequestDto loginRequestDto) // TODO check order of check and null
         {
-            var user = _db.ApplicationUsers.FirstOrDefault(u => u.UserName.Equals(loginRequestDto.UserName, StringComparison.CurrentCultureIgnoreCase));
+            var user = _db.ApplicationUsers.FirstOrDefault(u => u.UserName == loginRequestDto.UserName);
 
             bool isValid = await _userManager.CheckPasswordAsync(user, loginRequestDto.Password);
             if (user == null || !isValid)

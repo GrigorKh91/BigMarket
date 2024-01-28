@@ -5,14 +5,9 @@ using BigMarket.Web.Utility;
 
 namespace BigMarket.Web.Service
 {
-    public sealed class CouponService : ICouponService
+    public sealed class CouponService(IBaseService baseService) : ICouponService
     {
-        private readonly IBaseService _baseService;
-
-        public CouponService(IBaseService baseService)
-        {
-            _baseService = baseService;
-        }
+        private readonly IBaseService _baseService = baseService;
 
         public async Task<ResponseDto> CreateCouponAsync(CouponDto couponDto)
         {

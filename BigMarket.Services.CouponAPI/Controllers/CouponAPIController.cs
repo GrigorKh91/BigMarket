@@ -10,7 +10,7 @@ namespace BigMarket.Services.CouponAPI.Controllers
 {
     [Route("api/coupon")]
     [ApiController]
-    [Authorize]
+   // [Authorize]
     public class CouponAPIController(AppDbContext db, IMapper mapper) : ControllerBase
     {
         private readonly AppDbContext _db = db;
@@ -54,7 +54,7 @@ namespace BigMarket.Services.CouponAPI.Controllers
         {
             try
             {
-                var coupon = await _db.Coupons.FirstAsync(c => c.CouponCode.Equals(code, StringComparison.CurrentCultureIgnoreCase));
+                var coupon = await _db.Coupons.FirstAsync(c => c.CouponCode==code);
                 _response.Result = _mapper.Map<CouponDto>(coupon);
             }
             catch (Exception ex)

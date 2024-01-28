@@ -6,17 +6,13 @@ using Newtonsoft.Json;
 
 namespace BigMarket.Web.Controllers
 {
-    public class CouponController : Controller
+    public class CouponController(ICouponService couponService) : Controller
     {
-        private readonly ICouponService _couponService;
-        public CouponController(ICouponService couponService)
-        {
-            _couponService = couponService;
-        }
-     
+        private readonly ICouponService _couponService = couponService;
+
         public async Task<IActionResult> CouponIndex()
         {
-            List<CouponDto> list = new List<CouponDto>();
+            List<CouponDto> list = [];
             ResponseDto response = await _couponService.GetAllCouponsAsync();
             if (response != null && response.IsSuccess)
             {

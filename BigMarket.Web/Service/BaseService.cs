@@ -7,16 +7,11 @@ using System.Text;
 
 namespace BigMarket.Web.Service
 {
-    public sealed class BaseService : IBaseService
+    public sealed class BaseService(IHttpClientFactory httpClientFactory,
+                                     ITokenProvider tokenProvider) : IBaseService
     {
-        private readonly IHttpClientFactory _httpClientFactory;
-        private readonly ITokenProvider _tokenProvider;
-        public BaseService(IHttpClientFactory httpClientFactory,
-                                         ITokenProvider tokenProvider)
-        {
-            _httpClientFactory = httpClientFactory;
-            _tokenProvider = tokenProvider;
-        }
+        private readonly IHttpClientFactory _httpClientFactory = httpClientFactory;
+        private readonly ITokenProvider _tokenProvider = tokenProvider;
 
         public async Task<ResponseDto> SendAsync(RequestDto requestDto, bool withBearer = true)
         {
@@ -42,21 +37,13 @@ namespace BigMarket.Web.Service
 
                 HttpResponseMessage apiResponse = null;
 
-                switch (requestDto.ApiType)
+                message.Method = requestDto.ApiType switch
                 {
-                    case ApiType.POST:
-                        message.Method = HttpMethod.Post;
-                        break;
-                    case ApiType.DELETE:
-                        message.Method = HttpMethod.Delete;
-                        break;
-                    case ApiType.PUT:
-                        message.Method = HttpMethod.Put;
-                        break;
-                    default:
-                        message.Method = HttpMethod.Get;
-                        break;
-                }
+                    ApiType.POST => HttpMethod.Post,
+                    ApiType.DELETE => HttpMethod.Delete,
+                    ApiType.PUT => HttpMethod.Put,
+                    _ => HttpMethod.Get,
+                };
 
                 apiResponse = await client.SendAsync(message);
 
