@@ -1,6 +1,7 @@
 ﻿using BigMarket.Web.Models;
 using BigMarket.Web.Models.ProductApi;
 using BigMarket.Web.Service.IService;
+using BigMarket.Web.Utility;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -20,7 +21,7 @@ namespace BigMarket.Web.Controllers
             }
             else
             {
-                TempData["error"] = response?.Message;
+                TempData[MessageType.Error] = response?.Message;
             }
 
             return View(list);
@@ -40,12 +41,12 @@ namespace BigMarket.Web.Controllers
                 ResponseDto response = await _productService.CreateProductAsync(model);
                 if (response != null && response.IsSuccess)
                 {
-                    TempData["success"] = "Product created successfully";
+                    TempData[MessageType.Success] = "Product created successfully";
                     return RedirectToAction(nameof(ProductIndex));
                 }
                 else
                 {
-                    TempData["error"] = response?.Message;
+                    TempData[MessageType.Error] = response?.Message;
                 }
             }
             return View(model);
@@ -61,7 +62,7 @@ namespace BigMarket.Web.Controllers
             }
             else
             {
-                TempData["error"] = response?.Message;
+                TempData[MessageType.Error] = response?.Message;
             }
             return NotFound();
         }
@@ -72,12 +73,12 @@ namespace BigMarket.Web.Controllers
             ResponseDto response = await _productService.DeleteProductAsync(model.ProductId);
             if (response != null && response.IsSuccess)
             {
-                TempData["success"] = "Product deleted successfully";
+                TempData[MessageType.Success] = "Product deleted successfully";
                 return RedirectToAction(nameof(ProductIndex));
             }
             else
             {
-                TempData["error"] = response?.Message;
+                TempData[MessageType.Error] = response?.Message;
             }
             return View(model);
         }
@@ -92,7 +93,7 @@ namespace BigMarket.Web.Controllers
             }
             else
             {
-                TempData["error"] = response?.Message;
+                TempData[MessageType.Error] = response?.Message;
             }
             return NotFound();
         }
@@ -103,12 +104,12 @@ namespace BigMarket.Web.Controllers
             ResponseDto response = await _productService.UpdateProductAsync(model);
             if (response != null && response.IsSuccess)
             {
-                TempData["success"] = "Product updated successfully";
+                TempData[MessageType.Success] = "Product updated successfully";
                 return RedirectToAction(nameof(ProductIndex));
             }
             else
             {
-                TempData["error"] = response?.Message;
+                TempData[MessageType.Error] = response?.Message;
             }
             return View(model);
         }

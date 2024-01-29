@@ -41,7 +41,7 @@ namespace BigMarket.Web.Controllers
             }
             else
             {
-                TempData["error"] = responseDto?.Message; ;
+                TempData[MessageType.Error] = responseDto?.Message; ;
                 return View(obj);
             }
         }
@@ -73,7 +73,7 @@ namespace BigMarket.Web.Controllers
                 assignRole = await _authService.AssignRoleAsync(obj);
                 if (assignRole != null && assignRole.IsSuccess)
                 {
-                    TempData["success"] = "Registration Successful"; // TODO change from hard code
+                    TempData[MessageType.Success] = "Registration Successful"; // TODO change from hard code
                     return RedirectToAction(nameof(Login));
                 }
             }
@@ -84,7 +84,7 @@ namespace BigMarket.Web.Controllers
                 new () { Text=SD.RolaCastomer, Value= SD.RolaCastomer },
             };
             ViewBag.RoleList = roleList;
-            TempData["error"] = result?.Message;
+            TempData[MessageType.Error] = result?.Message;
             return View(obj);
         }
 

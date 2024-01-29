@@ -1,6 +1,7 @@
 ﻿using BigMarket.Web.Models;
 using BigMarket.Web.Models.CouponApi;
 using BigMarket.Web.Service.IService;
+using BigMarket.Web.Utility;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -20,7 +21,7 @@ namespace BigMarket.Web.Controllers
             }
             else
             {
-                TempData["error"] = response?.Message;
+                TempData[MessageType.Error] = response?.Message;
             }
 
             return View(list);
@@ -40,12 +41,12 @@ namespace BigMarket.Web.Controllers
                 ResponseDto response = await _couponService.CreateCouponAsync(model);
                 if (response != null && response.IsSuccess)
                 {
-                    TempData["success"] = "Coupon created successfully";
+                    TempData[MessageType.Success] = "Coupon created successfully";
                     return RedirectToAction(nameof(CouponIndex));
                 }
                 else
                 {
-                    TempData["error"] = response?.Message;
+                    TempData[MessageType.Error] = response?.Message;
                 }
             }
             return View(model);
@@ -62,7 +63,7 @@ namespace BigMarket.Web.Controllers
             }
             else
             {
-                TempData["error"] = response?.Message;
+                TempData[MessageType.Error] = response?.Message;
             }
             return NotFound();
         }
@@ -73,12 +74,12 @@ namespace BigMarket.Web.Controllers
             ResponseDto response = await _couponService.DeleteCouponAsync(model.CouponId);
             if (response != null && response.IsSuccess)
             {
-                TempData["success"] = "Coupon deleted successfully";
+                TempData[MessageType.Success] = "Coupon deleted successfully";
                 return RedirectToAction(nameof(CouponIndex));
             }
             else
             {
-                TempData["error"] = response?.Message;
+                TempData[MessageType.Error] = response?.Message;
             }
             return View(model);
         }
