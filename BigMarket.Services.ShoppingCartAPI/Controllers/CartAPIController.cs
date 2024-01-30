@@ -45,7 +45,7 @@ namespace BigMarket.Services.ShoppingCartAPI.Controllers
                 }
 
                 // applay coupon if any
-                if (!string.IsNullOrEmpty(cart.CartHeader.CouponCode))
+                if (!string.IsNullOrEmpty(cart.CartHeader.CouponCode))// TODO if detete coupon code from db CartHeader stil contains this code
                 {
                     CouponDto coupon = await _couponService.GetCoupon(cart.CartHeader.CouponCode);
                     if (coupon != null && cart.CartHeader.CartTotal > coupon.MinAmount)

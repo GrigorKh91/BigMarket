@@ -38,7 +38,6 @@ namespace BigMarket.Web.Service
             };
             return await _baseService.SendAsync(request);
         }
-
         public async Task<ResponseDto> UpsertCartasync(CartDto cartDto)
         {
             var request = new RequestDto()
