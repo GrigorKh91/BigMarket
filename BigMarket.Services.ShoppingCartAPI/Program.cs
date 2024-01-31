@@ -4,6 +4,7 @@ using BigMarket.Services.ShoppingCartAPI.Data;
 using BigMarket.Services.ShoppingCartAPI.Extentions;
 using BigMarket.Services.ShoppingCartAPI.Service;
 using BigMarket.Services.ShoppingCartAPI.Service.IService;
+using BigMarket.Services.ShoppingCartAPI.Utility;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,13 +18,14 @@ builder.Services.AddDbContext<AppDbContext>(optiion =>
 IMapper mapper = MappingConfig.RegisterMaps().CreateMapper();
 builder.Services.AddSingleton(mapper);
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<BackendApiAuthenticationHttpClientHandler>();
 builder.Services.AddScoped<ICouponService, CouponService>();
 builder.Services.AddHttpClient("Product", u => u.BaseAddress =
-new Uri(builder.Configuration["ServiceUrles:ProductAPI"]));
+new Uri(builder.Configuration["ServiceUrles:ProductAPI"])).AddHttpMessageHandler<BackendApiAuthenticationHttpClientHandler>();
 builder.Services.AddHttpClient("Coupon", u => u.BaseAddress =
-new Uri(builder.Configuration["ServiceUrles:CouponAPI"]));
+new Uri(builder.Configuration["ServiceUrles:CouponAPI"])).AddHttpMessageHandler<BackendApiAuthenticationHttpClientHandler>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
