@@ -39,7 +39,22 @@ namespace BigMarket.Web.Controllers
             ResponseDto response = await _cartService.ApplayCoupontAsync(cartDto);
             if (response != null && response.IsSuccess)
             {
-                TempData[MessageType.Success] = "cart updated successfully";
+                TempData[MessageType.Success] = "Cart updated successfully";
+                return RedirectToAction(nameof(CartIndex));
+            }
+            return View(); //TODO check View()
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EmailCart(CartDto cartDto) // TODO why need cartDto
+        {
+            CartDto cart=await LoadCartDtoBaseOnLoggedInUser();
+            cart.CartHeader.Email = User.Claims.Where(u => u.Type == JwtRegisteredClaimNames.Email)?
+                                                   .FirstOrDefault()?.Value;
+            ResponseDto response = await _cartService.EmailCartAsync(cart);
+            if (response != null && response.IsSuccess)
+            {
+                TempData[MessageType.Success] = "Email will be processed and sent shortly.";
                 return RedirectToAction(nameof(CartIndex));
             }
             return View(); //TODO check View()

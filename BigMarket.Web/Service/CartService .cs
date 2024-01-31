@@ -19,6 +19,18 @@ namespace BigMarket.Web.Service
             };
             return await _baseService.SendAsync(request);
         }
+
+        public async  Task<ResponseDto> EmailCartAsync(CartDto cartDto)
+        {
+            var request = new RequestDto()
+            {
+                ApiType = SD.ApiType.POST,
+                Data = cartDto,
+                Url = SD.ShoppingCartAPIBase + "/api/cart/EmailCartRequest"
+            };
+            return await _baseService.SendAsync(request);
+        }
+
         public async Task<ResponseDto> GetcartByUserIdAsync(string userId)
         {
             var request = new RequestDto()
