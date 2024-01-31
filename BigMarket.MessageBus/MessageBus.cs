@@ -6,6 +6,7 @@ namespace BigMarket.MessageBus
 {
     public class MessageBus : IMessageBus
     {
+        // TODO move connection string
         private string connectionString = @"Endpoint=sb://bigmarket.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=+QfXO9VRB5172U+W1OV1hICOeGwyCLQsS+ASbItsmR4=";
         public async Task PublishMessageAsync(object message, string topic_queue_Name)
         {

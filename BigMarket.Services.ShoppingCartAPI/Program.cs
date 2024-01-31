@@ -14,7 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<AppDbContext>(optiion =>
 {
-    optiion.UseSqlServer(builder.Configuration.GetConnectionString("CouponConnection"));
+    optiion.UseSqlServer(builder.Configuration.GetConnectionString("ShoppingCartConnection"));
 });
 IMapper mapper = MappingConfig.RegisterMaps().CreateMapper();
 builder.Services.AddSingleton(mapper);
