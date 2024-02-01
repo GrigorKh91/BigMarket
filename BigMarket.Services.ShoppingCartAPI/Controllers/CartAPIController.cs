@@ -95,7 +95,7 @@ namespace BigMarket.Services.ShoppingCartAPI.Controllers
         {
             try
             {
-                string topic_queue_Name = _configuration.GetValue<string>("TopikAndQueueNames:EmailShoppingCart");
+                string topic_queue_Name = _configuration.GetValue<string>("TopikAndQueueNames:EmailShoppingCartQueue");
                 await _messageBus.PublishMessageAsync(cartDto, topic_queue_Name);
                 _response.Result = true;
             }
