@@ -1,6 +1,6 @@
 ﻿using BigMarket.Web.Models;
 using BigMarket.Web.Models.ShoppingCartAPI;
-using BigMarket.Web.Service.IService;
+using BigMarket.Web.Services.IServices;
 using BigMarket.Web.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

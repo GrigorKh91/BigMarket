@@ -4,7 +4,7 @@ using BigMarket.Services.ShoppingCartAPI;
 using BigMarket.Services.ShoppingCartAPI.Data;
 using BigMarket.Services.ShoppingCartAPI.Extentions;
 using BigMarket.Services.ShoppingCartAPI.Service;
-using BigMarket.Services.ShoppingCartAPI.Service.IService;
+using BigMarket.Services.ShoppingCartAPI.Services.IServices;
 using BigMarket.Services.ShoppingCartAPI.Utility;
 using Microsoft.EntityFrameworkCore;
 

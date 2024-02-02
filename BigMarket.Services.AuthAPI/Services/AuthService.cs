@@ -1,7 +1,7 @@
 ﻿using BigMarket.Services.AuthAPI.Data;
 using BigMarket.Services.AuthAPI.Models;
 using BigMarket.Services.AuthAPI.Models.Dto;
-using BigMarket.Services.AuthAPI.Service.IService;
+using BigMarket.Services.AuthAPI.Services.IServices;
 using Microsoft.AspNetCore.Identity;
 
 namespace BigMarket.Services.AuthAPI.Service

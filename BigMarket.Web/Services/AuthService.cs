@@ -1,18 +1,14 @@
 ﻿using BigMarket.Web.Models;
 using BigMarket.Web.Models.AuthApi;
-using BigMarket.Web.Service.IService;
+using BigMarket.Web.Services.IServices;
 using BigMarket.Web.Utility;
 
-namespace BigMarket.Web.Service
+namespace BigMarket.Web.Services
 {
-    public sealed class AuthService : IAuthService
+    public sealed class AuthService(IBaseService baseService) : IAuthService
     {
-        private readonly IBaseService _baseService;
+        private readonly IBaseService _baseService = baseService;
 
-        public AuthService(IBaseService baseService)
-        {
-            _baseService = baseService;
-        }
         public async Task<ResponseDto> AssignRoleAsync(RegistrationRequestDto registrationRequestDto)
         {
             var request = new RequestDto()

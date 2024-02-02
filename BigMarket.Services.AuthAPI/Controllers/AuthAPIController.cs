@@ -1,14 +1,19 @@
-﻿using BigMarket.Services.AuthAPI.Models.Dto;
-using BigMarket.Services.AuthAPI.Service.IService;
+﻿using BigMarket.MessageBus;
+using BigMarket.Services.AuthAPI.Models.Dto;
+using BigMarket.Services.AuthAPI.Services.IServices;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BigMarket.Services.AuthAPI.Controllers
 {
     [Route("api/auth")]
     [ApiController]
-    public class AuthAPIController(IAuthService authService) : ControllerBase
+    public class AuthAPIController(IAuthService authService,
+                                                       IMessageBus messageBus,
+                                                        IConfiguration configuration) : ControllerBase
     {
         private readonly IAuthService _authService = authService;
+        private readonly IMessageBus _messageBus = messageBus;
+        private readonly IConfiguration _configuration = configuration;
         private readonly ResponseDto _response = new();
 
         [HttpPost("register")]
@@ -21,6 +26,8 @@ namespace BigMarket.Services.AuthAPI.Controllers
                 _response.Message = errorMessage;
                 return BadRequest(_response);
             }
+            string topic_queue_Name = _configuration.GetValue<string>("TopikAndQueueNames:RegisterUserQueue");
+            await _messageBus.PublishMessageAsync(model.Email, topic_queue_Name);
             return Ok(_response);
         }
 

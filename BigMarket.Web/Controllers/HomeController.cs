@@ -1,5 +1,5 @@
 using BigMarket.Web.Models;
-using BigMarket.Web.Service.IService;
+using BigMarket.Web.Services.IServices;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Diagnostics;
@@ -55,19 +55,19 @@ namespace BigMarket.Web.Controllers
         [ActionName("ProductDetalis")]
         public async Task<IActionResult> ProductDetalis(ProductDto productDto)
         {
-            CartDto cartDto = new CartDto
+            CartDto cartDto = new()
             {
                 CartHeader = new CartHeaderDto
                 {
                     UserId = User.Claims.Where(u => u.Type == JwtClaimTypes.Subject)?.FirstOrDefault()?.Value
                 }
             };
-            CartDetalisDto cartDetalisDto = new CartDetalisDto
+            CartDetalisDto cartDetalisDto = new ()
             {
                 Count = productDto.Count,
                 ProductId = productDto.ProductId
             };
-            List<CartDetalisDto> cartDetalisDtos = new() { cartDetalisDto };
+            List<CartDetalisDto> cartDetalisDtos = [cartDetalisDto];
             cartDto.CartDetalis = cartDetalisDtos;
 
             ResponseDto response = await _cartService.UpsertCartasync(cartDto);

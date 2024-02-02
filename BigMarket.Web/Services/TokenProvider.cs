@@ -1,16 +1,11 @@
-﻿using BigMarket.Web.Service.IService;
+﻿using BigMarket.Web.Services.IServices;
 using BigMarket.Web.Utility;
-using Newtonsoft.Json.Linq;
 
-namespace BigMarket.Web.Service
+namespace BigMarket.Web.Services
 {
-    public sealed class TokenProvider : ITokenProvider
+    public sealed class TokenProvider(IHttpContextAccessor contextAccessor) : ITokenProvider
     {
-        private readonly IHttpContextAccessor _contextAccessor;
-        public TokenProvider(IHttpContextAccessor contextAccessor)
-        {
-            _contextAccessor = contextAccessor;
-        }
+        private readonly IHttpContextAccessor _contextAccessor = contextAccessor;
 
         public void ClearToken()
         {

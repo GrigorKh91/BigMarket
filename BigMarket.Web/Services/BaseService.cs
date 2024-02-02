@@ -1,11 +1,11 @@
 ﻿using BigMarket.Web.Models;
-using BigMarket.Web.Service.IService;
+using BigMarket.Web.Services.IServices;
 using Newtonsoft.Json;
 using static BigMarket.Web.Utility.SD;
 using System.Net;
 using System.Text;
 
-namespace BigMarket.Web.Service
+namespace BigMarket.Web.Services
 {
     public sealed class BaseService(IHttpClientFactory httpClientFactory,
                                      ITokenProvider tokenProvider) : IBaseService

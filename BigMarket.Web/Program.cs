@@ -1,5 +1,5 @@
-using BigMarket.Web.Service;
-using BigMarket.Web.Service.IService;
+using BigMarket.Web.Services;
+using BigMarket.Web.Services.IServices;
 using BigMarket.Web.Utility;
 using Microsoft.AspNetCore.Authentication.Cookies;
 

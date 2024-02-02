@@ -1,4 +1,7 @@
 using BigMarket.Services.EmailAPI.Data;
+using BigMarket.Services.EmailAPI.Extentions;
+using BigMarket.Services.EmailAPI.Messaging;
+using BigMarket.Services.EmailAPI.Services;
 using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +10,12 @@ builder.Services.AddDbContext<AppDbContext>(optiion =>
 {
     optiion.UseSqlServer(builder.Configuration.GetConnectionString("EmailConnection"));
 });
+
+var optionBuilder = new DbContextOptionsBuilder<AppDbContext>();
+optionBuilder.UseSqlServer(builder.Configuration.GetConnectionString("EmailConnection"));
+builder.Services.AddSingleton(new EmailService(optionBuilder.Options)); // Becouse EmailService is singleton
+
+builder.Services.AddSingleton<IAzureServiceBusConsumer, AzureServiceBusConsumer>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -27,6 +36,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 ApplayMigration();
+app.UseAzureServiceBusConsumer();
 app.Run();
 
 void ApplayMigration()

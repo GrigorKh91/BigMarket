@@ -1,9 +1,9 @@
 ﻿using BigMarket.Web.Models;
 using BigMarket.Web.Models.ProductApi;
-using BigMarket.Web.Service.IService;
+using BigMarket.Web.Services.IServices;
 using BigMarket.Web.Utility;
 
-namespace BigMarket.Web.Service
+namespace BigMarket.Web.Services
 {
     public sealed class ProductService(IBaseService baseService) : IProductService
     {

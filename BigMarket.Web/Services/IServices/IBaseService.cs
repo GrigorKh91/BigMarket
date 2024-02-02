@@ -1,6 +1,6 @@
 ﻿using BigMarket.Web.Models;
 
-namespace BigMarket.Web.Service.IService
+namespace BigMarket.Web.Services.IServices
 {
     public interface IBaseService
     {

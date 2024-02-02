@@ -1,6 +1,6 @@
 ﻿using BigMarket.Web.Models;
 using BigMarket.Web.Models.AuthApi;
-using BigMarket.Web.Service.IService;
+using BigMarket.Web.Services.IServices;
 using BigMarket.Web.Utility;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;

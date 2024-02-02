@@ -1,7 +1,7 @@
 ﻿using BigMarket.Web.Models;
 using BigMarket.Web.Models.ProductApi;
 
-namespace BigMarket.Web.Service.IService
+namespace BigMarket.Web.Services.IServices
 {
     public interface IProductService
     {

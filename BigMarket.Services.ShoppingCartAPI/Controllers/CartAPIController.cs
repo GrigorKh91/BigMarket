@@ -3,7 +3,7 @@ using BigMarket.MessageBus;
 using BigMarket.Services.ShoppingCartAPI.Data;
 using BigMarket.Services.ShoppingCartAPI.Models;
 using BigMarket.Services.ShoppingCartAPI.Models.Dto;
-using BigMarket.Services.ShoppingCartAPI.Service.IService;
+using BigMarket.Services.ShoppingCartAPI.Services.IServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 

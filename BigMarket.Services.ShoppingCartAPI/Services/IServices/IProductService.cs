@@ -1,6 +1,6 @@
 ﻿using BigMarket.Services.ShoppingCartAPI.Models.Dto;
 
-namespace BigMarket.Services.ShoppingCartAPI.Service.IService
+namespace BigMarket.Services.ShoppingCartAPI.Services.IServices
 {
     public interface IProductService
     {

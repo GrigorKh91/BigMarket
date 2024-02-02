@@ -1,5 +1,5 @@
 ﻿using BigMarket.Services.ShoppingCartAPI.Models.Dto;
-using BigMarket.Services.ShoppingCartAPI.Service.IService;
+using BigMarket.Services.ShoppingCartAPI.Services.IServices;
 using Newtonsoft.Json;
 
 namespace BigMarket.Services.ShoppingCartAPI.Service

@@ -1,5 +1,5 @@
 ﻿using BigMarket.Services.AuthAPI.Models;
-using BigMarket.Services.AuthAPI.Service.IService;
+using BigMarket.Services.AuthAPI.Services.IServices;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -8,14 +8,9 @@ using System.Text;
 
 namespace BigMarket.Services.AuthAPI.Service
 {
-    public sealed class JwtTokenGenerator : IJwtTokenGenerator
+    public sealed class JwtTokenGenerator(IOptions<JwtOptions> jwtOptions) : IJwtTokenGenerator
     {
-        private readonly JwtOptions _jwtOptions;
-
-        public JwtTokenGenerator(IOptions<JwtOptions> jwtOptions)
-        {
-            _jwtOptions = jwtOptions.Value;
-        }
+        private readonly JwtOptions _jwtOptions = jwtOptions.Value;
 
         public string GenerateToken(ApplicationUser applicationUser, IEnumerable<string> rols)
         {
@@ -24,9 +19,9 @@ namespace BigMarket.Services.AuthAPI.Service
 
             var claimList = new List<Claim>
             {
-                 new Claim(JwtRegisteredClaimNames.Email,applicationUser.Email),
-                 new Claim(JwtRegisteredClaimNames.Sub,applicationUser.Id),
-                 new Claim(JwtRegisteredClaimNames.Name,applicationUser.Email)
+                 new (JwtRegisteredClaimNames.Email,applicationUser.Email),
+                 new (JwtRegisteredClaimNames.Sub,applicationUser.Id),
+                 new (JwtRegisteredClaimNames.Name,applicationUser.Email)
             };
             claimList.AddRange(rols.Select(role => new Claim(ClaimTypes.Role, role)));
             var tokenDescriptor = new SecurityTokenDescriptor
