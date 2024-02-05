@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace BigMarket.Web.Models.ProductApi
+namespace BigMarket.Web.Models.ProductAPI
 {
     public sealed class ProductDto
     {

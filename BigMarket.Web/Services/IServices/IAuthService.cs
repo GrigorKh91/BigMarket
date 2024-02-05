@@ -1,5 +1,5 @@
 ﻿using BigMarket.Web.Models;
-using BigMarket.Web.Models.AuthApi;
+using BigMarket.Web.Models.AuthAPI;
 
 namespace BigMarket.Web.Services.IServices
 {

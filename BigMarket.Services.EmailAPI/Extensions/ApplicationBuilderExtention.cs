@@ -1,8 +1,8 @@
 ﻿using BigMarket.Services.EmailAPI.Messaging;
 
-namespace BigMarket.Services.EmailAPI.Extentions
+namespace BigMarket.Services.EmailAPI.Extensions
 {
-    public static class ApplicationBuilderExtentions
+    public static class ApplicationBuilderExtension
     {
         private static IAzureServiceBusConsumer ServiceBusConsumer { get; set; }
 

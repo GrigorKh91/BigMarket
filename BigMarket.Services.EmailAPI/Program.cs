@@ -1,5 +1,5 @@
 using BigMarket.Services.EmailAPI.Data;
-using BigMarket.Services.EmailAPI.Extentions;
+using BigMarket.Services.EmailAPI.Extensions;
 using BigMarket.Services.EmailAPI.Messaging;
 using BigMarket.Services.EmailAPI.Services;
 using Microsoft.EntityFrameworkCore;

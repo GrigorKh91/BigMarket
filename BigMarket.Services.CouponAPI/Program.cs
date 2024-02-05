@@ -1,7 +1,7 @@
 using AutoMapper;
 using BigMarket.Services.CouponAPI;
 using BigMarket.Services.CouponAPI.Data;
-using BigMarket.Services.CouponAPI.Extentions;
+using BigMarket.Services.CouponAPI.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

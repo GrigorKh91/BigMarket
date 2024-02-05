@@ -8,7 +8,7 @@ using System.Text;
 namespace BigMarket.Web.Services
 {
     public sealed class BaseService(IHttpClientFactory httpClientFactory,
-                                     ITokenProvider tokenProvider) : IBaseService
+                                                         ITokenProvider tokenProvider) : IBaseService
     {
         private readonly IHttpClientFactory _httpClientFactory = httpClientFactory;
         private readonly ITokenProvider _tokenProvider = tokenProvider;

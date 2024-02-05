@@ -3,7 +3,7 @@ using BigMarket.Web.Services.IServices;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Diagnostics;
-using BigMarket.Web.Models.ProductApi;
+using BigMarket.Web.Models.ProductAPI;
 using Microsoft.AspNetCore.Authorization;
 using BigMarket.Web.Models.ShoppingCartAPI;
 using IdentityModel;

@@ -1,5 +1,5 @@
 ﻿using BigMarket.Web.Models;
-using BigMarket.Web.Models.CouponApi;
+using BigMarket.Web.Models.CouponAPI;
 using BigMarket.Web.Services.IServices;
 using BigMarket.Web.Utility;
 using Microsoft.AspNetCore.Mvc;

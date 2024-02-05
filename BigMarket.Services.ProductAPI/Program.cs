@@ -1,7 +1,7 @@
 using AutoMapper;
 using BigMarket.Services.ProductAPI;
 using BigMarket.Services.ProductAPI.Data;
-using BigMarket.Services.ProductAPI.Extentions;
+using BigMarket.Services.ProductAPI.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

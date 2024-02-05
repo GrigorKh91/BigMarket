@@ -1,4 +1,5 @@
 ﻿using BigMarket.Web.Models;
+using BigMarket.Web.Models.OrderAPI;
 using BigMarket.Web.Models.ShoppingCartAPI;
 using BigMarket.Web.Services.IServices;
 using BigMarket.Web.Utility;
@@ -9,11 +10,13 @@ using Newtonsoft.Json;
 
 namespace BigMarket.Web.Controllers
 {
-    public class CartController(ICartService cartService) : Controller
+    public class CartController(ICartService cartService,
+                                                IOrderService orderService ) : Controller
     {
         private readonly ICartService _cartService = cartService;
+        private readonly IOrderService _orderService= orderService; 
 
-        [Authorize]
+      //  [Authorize]
         public async Task<IActionResult> CartIndex()
         {
             var cartDto = await LoadCartDtoBaseOnLoggedInUser();
@@ -25,6 +28,25 @@ namespace BigMarket.Web.Controllers
         {
             var cartDto = await LoadCartDtoBaseOnLoggedInUser();
             return View(cartDto);
+        }
+
+        [HttpPost]
+        [ActionName("Checkout")]
+        public async Task<IActionResult> Checkout(CartDto cartDto)
+        {
+            CartDto cart = await LoadCartDtoBaseOnLoggedInUser();
+            cart.CartHeader.Phone = cartDto.CartHeader.Phone;
+            cart.CartHeader.Email = cartDto.CartHeader.Email;
+            cart.CartHeader.Name = cartDto.CartHeader.Name;
+
+            var response = await _orderService.CreateOrder(cart);
+            OrderHeaderDto orderHeaderDto = JsonConvert.DeserializeObject<OrderHeaderDto>
+                (Convert.ToString(response.Result));
+            if (response != null && response.IsSuccess)
+            {
+                // get stripe session and redirect to stripe to place order
+            }
+            return View();
         }
 
         public async Task<IActionResult> Remove(int cartDetalisId)
@@ -55,7 +77,7 @@ namespace BigMarket.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> EmailCart(CartDto cartDto) // TODO why need cartDto
         {
-            CartDto cart=await LoadCartDtoBaseOnLoggedInUser();
+            CartDto cart = await LoadCartDtoBaseOnLoggedInUser();
             cart.CartHeader.Email = User.Claims.Where(u => u.Type == JwtRegisteredClaimNames.Email)?
                                                    .FirstOrDefault()?.Value;
             ResponseDto response = await _cartService.EmailCartAsync(cart);

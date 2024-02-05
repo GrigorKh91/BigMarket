@@ -3,9 +3,9 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
 
-namespace BigMarket.Services.ProductAPI.Extentions
+namespace BigMarket.Services.CouponAPI.Extensions
 {
-    internal static class WebApplicationBuilderExtentions
+    internal static class WebApplicationBuilderExtension
     {
         internal static WebApplicationBuilder AddAppAuthentication(this WebApplicationBuilder builder)
         {

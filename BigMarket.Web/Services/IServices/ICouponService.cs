@@ -1,5 +1,5 @@
 ﻿using BigMarket.Web.Models;
-using BigMarket.Web.Models.CouponApi;
+using BigMarket.Web.Models.CouponAPI;
 
 namespace BigMarket.Web.Services.IServices
 {
