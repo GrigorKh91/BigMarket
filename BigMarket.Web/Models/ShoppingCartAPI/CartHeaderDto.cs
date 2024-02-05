@@ -1,4 +1,6 @@
-﻿namespace BigMarket.Web.Models.ShoppingCartAPI
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace BigMarket.Web.Models.ShoppingCartAPI
 {
     public sealed class CartHeaderDto
     {
@@ -8,9 +10,14 @@
         public double Discount { get; set; }
         public double CartTotal { get; set; }
 
-        public string  FirstName { get; set; }
-        public string  LastName { get; set; }
-        public string  Phone { get; set; }
-        public string  Email { get; set; }
+
+        [Required]
+        public string Name { get; set; }
+
+        [Required]
+        public string Phone { get; set; }
+
+        [Required]
+        public string Email { get; set; }
     }
 }

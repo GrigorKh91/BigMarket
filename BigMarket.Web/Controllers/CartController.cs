@@ -20,6 +20,13 @@ namespace BigMarket.Web.Controllers
             return View(cartDto);
         }
 
+        [Authorize]
+        public async Task<IActionResult> Checkout()
+        {
+            var cartDto = await LoadCartDtoBaseOnLoggedInUser();
+            return View(cartDto);
+        }
+
         public async Task<IActionResult> Remove(int cartDetalisId)
         {
             var userId = User.Claims.Where(u => u.Type == JwtRegisteredClaimNames.Sub)?
