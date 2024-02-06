@@ -20,5 +20,27 @@ namespace BigMarket.Web.Services
             };
             return await _baseService.SendAsync(request);
         }
+
+        public async Task<ResponseDto> CreateStripeSession(StripeRequestDto stripeRequestDto)
+        {
+            var request = new RequestDto()
+            {
+                ApiType = SD.ApiType.POST,
+                Data = stripeRequestDto,
+                Url = SD.OrderAPIBase + "/api/order/CreateStripeSession"
+            };
+            return await _baseService.SendAsync(request);
+        }
+
+        public async Task<ResponseDto> ValidateStripeSession(int orderHeaderId)
+        {
+            var request = new RequestDto()
+            {
+                ApiType = SD.ApiType.POST,
+                Data = orderHeaderId,
+                Url = SD.OrderAPIBase + "/api/order/ValidateStripeSession"
+            };
+            return await _baseService.SendAsync(request);
+        }
     }
 }

@@ -11,12 +11,12 @@ using Newtonsoft.Json;
 namespace BigMarket.Web.Controllers
 {
     public class CartController(ICartService cartService,
-                                                IOrderService orderService ) : Controller
+                                                IOrderService orderService) : Controller
     {
         private readonly ICartService _cartService = cartService;
-        private readonly IOrderService _orderService= orderService; 
+        private readonly IOrderService _orderService = orderService;
 
-      //  [Authorize]
+        [Authorize]
         public async Task<IActionResult> CartIndex()
         {
             var cartDto = await LoadCartDtoBaseOnLoggedInUser();
@@ -45,9 +45,41 @@ namespace BigMarket.Web.Controllers
             if (response != null && response.IsSuccess)
             {
                 // get stripe session and redirect to stripe to place order
+                var domain = Request.Scheme + "://" + Request.Host.Value + "/";
+                StripeRequestDto stripeRequestDto = new()
+                {
+                    ApprovedUrl = domain + "cart/Confirmation?orderId=" + orderHeaderDto.OrderHeaderId,
+                    CancelUrl = domain + "cart/checkout",
+                    OrderHeader = orderHeaderDto,
+                };
+                var stripeResponse = await _orderService.CreateStripeSession(stripeRequestDto);
+                StripeRequestDto stripeResponseResult = JsonConvert.DeserializeObject<StripeRequestDto>
+               (Convert.ToString(stripeResponse.Result));
+
+                Response.Headers.Add("Location", stripeResponseResult.SessionUrl); //TODU check  
+                return new StatusCodeResult(303);
             }
             return View();
         }
+
+        [Authorize]
+        public async Task<IActionResult> Confirmation(int orderId)
+        {
+            ResponseDto response = await _orderService.ValidateStripeSession(orderId);
+            if (response != null && response.IsSuccess)
+            {
+                OrderHeaderDto orderHeader = JsonConvert.DeserializeObject<OrderHeaderDto>
+                    (Convert.ToString(response.Result));
+
+                if (orderHeader != null && orderHeader.Status == SD.Status_Approved)
+                {
+                    return View(orderId);
+                }
+            }
+            // TODO redirect to some error page
+            return View(orderId);
+        }
+
 
         public async Task<IActionResult> Remove(int cartDetalisId)
         {

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace BigMarket.Services.CouponAPI.Controllers
 {
     [Route("api/coupon")]
@@ -74,6 +75,17 @@ namespace BigMarket.Services.CouponAPI.Controllers
                 Coupon coupon = _mapper.Map<Coupon>(couponDto);
                 await _db.Coupons.AddAsync(coupon);
                 await _db.SaveChangesAsync();
+
+                var options = new Stripe.CouponCreateOptions
+                {
+                    AmountOff = (long)(couponDto.DiscountAmount * 100),
+                    Name = couponDto.CouponCode,
+                    Currency = "usd",
+                    Id = couponDto.CouponCode
+                };
+                var service = new Stripe.CouponService();
+                service.Create(options);
+
                 _response.Result = couponDto;
             }
             catch (Exception ex)
@@ -113,6 +125,9 @@ namespace BigMarket.Services.CouponAPI.Controllers
                 Coupon coupon = _db.Coupons.First(c => c.CouponId == id);
                 _db.Coupons.Remove(coupon); // TODO check need or not async
                 _db.SaveChanges();
+
+                var service = new Stripe.CouponService();
+                service.Delete(coupon.CouponCode);
             }
             catch (Exception ex)
             {
