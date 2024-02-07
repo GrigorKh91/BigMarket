@@ -3,7 +3,6 @@ using BigMarket.MessageBus;
 using BigMarket.Services.ShoppingCartAPI;
 using BigMarket.Services.OrderAPI.Data;
 using BigMarket.Services.OrderAPI.Extentions;
-using BigMarket.Services.OrderAPI.Service;
 using BigMarket.Services.OrderAPI.Services.IServices;
 using BigMarket.Services.OrderAPI.Utility;
 using Microsoft.EntityFrameworkCore;

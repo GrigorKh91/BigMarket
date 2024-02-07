@@ -1,0 +1,6 @@
+@BigMarket.Services.RewardAPI_HostAddress = http://localhost:5120
+
+GET {{BigMarket.Services.RewardAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

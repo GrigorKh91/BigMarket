@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BigMarket.MessageBus;
 using BigMarket.Services.OrderAPI.Data;
 using BigMarket.Services.OrderAPI.Models;
 using BigMarket.Services.OrderAPI.Models.Dto;
@@ -15,12 +16,16 @@ namespace BigMarket.Services.OrderAPI.Controllers
     [ApiController]
     public class OrderAPIController(IMapper mapper,
                                                         AppDbContext db,
-                                                        IProductService productService) : ControllerBase
+                                                        IProductService productService,
+                                                        IMessageBus messageBus,
+                                                        IConfiguration configuration) : ControllerBase
     {
         private readonly ResponseDto _response = new();
         private readonly IMapper _mapper = mapper;
         private readonly AppDbContext _db = db;
         private readonly IProductService _productService = productService;
+        private readonly IMessageBus _messageBus = messageBus;
+        private readonly IConfiguration _configuration = configuration;
 
 
         [Authorize]
@@ -130,6 +135,14 @@ namespace BigMarket.Services.OrderAPI.Controllers
                     orderHeader.PaymentIntentId = paymentIntent.Id;
                     orderHeader.Status = SD.Status_Approved;
                     await _db.SaveChangesAsync();
+                    RewardsDto rewardsDto = new()
+                    {
+                        OrderId = orderHeader.OrderHeaderId,
+                        RewardsActivity = Convert.ToInt32(orderHeader.OrderTotal),
+                        UserId = orderHeader.UserId
+                    };
+                    string topicname = _configuration.GetValue<string>("TopicAndQueueNames:OrderCreatedTopic");
+                    await _messageBus.PublishMessageAsync(rewardsDto, topicname);
                     _response.Result = _mapper.Map<OrderHeaderDto>(orderHeader);
                 }
 
