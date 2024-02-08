@@ -32,6 +32,37 @@ namespace BigMarket.Web.Services
             return await _baseService.SendAsync(request);
         }
 
+        public async Task<ResponseDto> GetAllOrders(string userId)
+        {
+            var request = new RequestDto()
+            {
+                ApiType = SD.ApiType.GET,
+                Url = SD.OrderAPIBase + "/api/order/GetOrders/" + userId
+            };
+            return await _baseService.SendAsync(request);
+        }
+
+        public async Task<ResponseDto> GetOrder(int orderId)
+        {
+            var request = new RequestDto()
+            {
+                ApiType = SD.ApiType.GET,
+                Url = SD.OrderAPIBase + "/api/order/GetOrder/" + orderId
+            };
+            return await _baseService.SendAsync(request);
+        }
+
+        public async Task<ResponseDto> UpdateOrderStatus(int orderId, string newStatus)
+        {
+            var request = new RequestDto()
+            {
+                ApiType = SD.ApiType.POST,
+                Data = newStatus,
+                Url = SD.OrderAPIBase + "/api/order/UpdateOrderStatus/" + orderId
+            };
+            return await _baseService.SendAsync(request);
+        }
+
         public async Task<ResponseDto> ValidateStripeSession(int orderHeaderId)
         {
             var request = new RequestDto()

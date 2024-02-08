@@ -7,6 +7,7 @@ using BigMarket.Services.OrderAPI.Services.IServices;
 using BigMarket.Services.OrderAPI.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Stripe;
 using Stripe.Checkout;
 
@@ -26,6 +27,54 @@ namespace BigMarket.Services.OrderAPI.Controllers
         private readonly IProductService _productService = productService;
         private readonly IMessageBus _messageBus = messageBus;
         private readonly IConfiguration _configuration = configuration;
+
+        [Authorize]
+        [HttpGet("GetOrders")]
+        public async Task<ResponseDto> Get(string userId = "")
+        {
+            try
+            {
+                IEnumerable<OrderHeader> objList;
+                if (User.IsInRole(SD.Role_Admin))
+                {
+                    objList = await _db.OrderHeaders.Include(u => u.OrderDetalis)
+                                                                          .OrderByDescending(u => u.OrderHeaderId)
+                                                                          .ToListAsync();
+                }
+                else
+                {
+                    objList = await _db.OrderHeaders.Include(u => u.OrderDetalis)
+                                                                          .Where(u => u.UserId == userId)
+                                                                         .OrderByDescending(u => u.OrderHeaderId)
+                                                                         .ToListAsync();
+                }
+                _response.Result = _mapper.Map<IEnumerable<OrderHeaderDto>>(objList);
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.Message = ex.Message;
+            }
+            return _response;
+        }
+
+        [Authorize]
+        [HttpGet("GetOrder/{id:int}")]
+        public async Task<ResponseDto> Get(int id)
+        {
+            try
+            {
+                OrderHeader orderHeader = await _db.OrderHeaders.Include(u => u.OrderDetalis)
+                                                                                                      .FirstAsync(u => u.OrderHeaderId == id);
+                _response.Result = _mapper.Map<OrderHeaderDto>(orderHeader);
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.Message = ex.Message;
+            }
+            return _response;
+        }
 
 
         [Authorize]
@@ -154,5 +203,42 @@ namespace BigMarket.Services.OrderAPI.Controllers
             }
             return _response;
         }
+
+
+        [Authorize]
+        [HttpPost("UpdateOrderStatus/{orderId:int}")]
+        public async Task<ResponseDto> UpdateOrderStatus(int orderId, [FromBody] string newStatus)
+        {
+            try
+            {
+                OrderHeader orderHeader = await _db.OrderHeaders.FirstAsync(u => u.OrderHeaderId == orderId);
+                if (orderHeader != null)
+                {
+                    if (newStatus == SD.Status_Canceled)
+                    {
+                        var option = new RefundCreateOptions
+                        {
+                            Reason = RefundReasons.RequestedByCustomer,
+                            PaymentIntent = orderHeader.PaymentIntentId
+                        };
+
+                        var service = new RefundService();
+                        Refund refund = service.Create(option);
+                    }
+                }
+                orderHeader.Status = newStatus;
+                await _db.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.Message = ex.Message;
+            }
+            return _response;
+
+        }
+
+
+
     }
 }
