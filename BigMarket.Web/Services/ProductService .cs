@@ -15,7 +15,9 @@ namespace BigMarket.Web.Services
             {
                 ApiType = SD.ApiType.POST,
                 Data = ProductDto,
-                Url = SD.ProductAPIBase + "/api/product/"
+                Url = SD.ProductAPIBase + "/api/product/",
+                ContentType = SD.ContentType.MultipartFormData
+
             };
             return await _baseService.SendAsync(request);
         }
@@ -66,7 +68,8 @@ namespace BigMarket.Web.Services
             {
                 ApiType = SD.ApiType.PUT,
                 Data = ProductDto,
-                Url = SD.ProductAPIBase + "/api/product/"
+                Url = SD.ProductAPIBase + "/api/product/",
+                ContentType = SD.ContentType.MultipartFormData
             };
             return await _baseService.SendAsync(request);
         }

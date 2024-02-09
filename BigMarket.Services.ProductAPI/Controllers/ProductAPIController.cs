@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 namespace BigMarket.Services.ProductAPI.Controllers
 {
     [Route("api/product")]
-    [ApiController] 
+    [ApiController]
     public class ProductAPIController(AppDbContext db, IMapper mapper) : ControllerBase
     {
         private readonly AppDbContext _db = db;
@@ -50,14 +50,33 @@ namespace BigMarket.Services.ProductAPI.Controllers
 
         [HttpPost]
         [Authorize(Roles = "ADMIN")]  // TODO change from had code
-        public async Task<ResponseDto> Post([FromBody] ProductDto ProductDto)
+        public async Task<ResponseDto> Post(ProductDto productDto)
         {
             try
             {
-                Product Product = _mapper.Map<Product>(ProductDto);
-                await _db.Products.AddAsync(Product);
+                Product product = _mapper.Map<Product>(productDto);
+                await _db.Products.AddAsync(product);
                 await _db.SaveChangesAsync();
-                _response.Result = ProductDto;
+                if (productDto.Image != null)
+                {
+                    string fileName = product.ProductId + Path.GetExtension(productDto.Image.FileName);
+                    string filePath = @"wwwroot\ProductImages\" + fileName;
+                    var filePathDirectory = Path.Combine(Directory.GetCurrentDirectory(), filePath);
+                    using (var fileStream = new FileStream(filePathDirectory, FileMode.Create))
+                    {
+                        productDto.Image.CopyTo(fileStream);
+                    }
+                    var baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.Value}{HttpContext.Request.PathBase.Value}";
+                    product.ImageUrl = baseUrl + "/ProductImages/" + fileName;
+                    product.ImageLocalPath = filePath;
+                }
+                else
+                {
+                    product.ImageUrl = "https://placehold.co/600x400"; // TODO change to some default
+                }
+                _db.Products.Update(product);
+                await _db.SaveChangesAsync();
+                _response.Result = _mapper.Map<ProductDto>(product);
             }
             catch (Exception ex)
             {
@@ -69,14 +88,39 @@ namespace BigMarket.Services.ProductAPI.Controllers
 
         [HttpPut]
         [Authorize(Roles = "ADMIN")]  // TODO change from hatd code
-        public ResponseDto Put([FromBody] ProductDto ProductDto)
+        public ResponseDto Put(ProductDto productDto)
         {
             try
             {
-                Product Product = _mapper.Map<Product>(ProductDto);
-                _db.Products.Update(Product);// TODO check need or not async
+                Product product = _mapper.Map<Product>(productDto);
+
+                if (productDto.Image != null)
+                {
+                    if (!string.IsNullOrEmpty(product.ImageLocalPath))
+                    {
+                        var oltFilePathDirectory = Path.Combine(Directory.GetCurrentDirectory(), product.ImageLocalPath);
+                        FileInfo file = new FileInfo(oltFilePathDirectory);
+                        if (file.Exists)
+                        {
+                            file.Delete();
+                        }
+                    }
+
+                    string fileName = product.ProductId + Path.GetExtension(productDto.Image.FileName);
+                    string filePath = @"wwwroot\ProductImages\" + fileName;
+                    var filePathDirectory = Path.Combine(Directory.GetCurrentDirectory(), filePath);
+                    using (var fileStream = new FileStream(filePathDirectory, FileMode.Create))
+                    {
+                        productDto.Image.CopyTo(fileStream);
+                    }
+                    var baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.Value}{HttpContext.Request.PathBase.Value}";
+                    product.ImageUrl = baseUrl + "/ProductImages/" + fileName;
+                    product.ImageLocalPath = filePath;
+                }
+
+                _db.Products.Update(product);// TODO check need or not async
                 _db.SaveChanges();
-                _response.Result = ProductDto;
+                _response.Result = _mapper.Map<ProductDto>(product);
             }
             catch (Exception ex)
             {
@@ -93,8 +137,18 @@ namespace BigMarket.Services.ProductAPI.Controllers
         {
             try
             {
-                Product Product = _db.Products.First(c => c.ProductId == id);
-                _db.Products.Remove(Product);// TODO check need or not async
+                Product product = _db.Products.First(c => c.ProductId == id);
+                if (!string.IsNullOrEmpty(product.ImageLocalPath))
+                {
+                    var oltFilePathDirectory = Path.Combine(Directory.GetCurrentDirectory(), product.ImageLocalPath);
+                    FileInfo file = new FileInfo(oltFilePathDirectory);
+                    if (file.Exists)
+                    {
+                        file.Delete();
+                    }
+                }
+
+                _db.Products.Remove(product);// TODO check need or not async
                 _db.SaveChanges();
             }
             catch (Exception ex)

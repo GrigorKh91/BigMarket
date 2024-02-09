@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace BigMarket.Services.ProductAPI.Models.Dto
+﻿namespace BigMarket.Services.ProductAPI.Models.Dto
 {
     public sealed class ProductDto
     {
@@ -10,5 +8,7 @@ namespace BigMarket.Services.ProductAPI.Models.Dto
         public string Description { get; set; }
         public string CategoryName { get; set; }
         public string ImageUrl { get; set; }
+        public string ImageLocalPath { get; set; }
+        public IFormFile Image { get; set; }
     }
 }

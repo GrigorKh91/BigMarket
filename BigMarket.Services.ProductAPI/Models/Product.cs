@@ -21,5 +21,8 @@ namespace BigMarket.Services.ProductAPI.Models
 
         [MaxLength(200)]
         public string ImageUrl { get; set; }
+
+        [MaxLength(200)]
+        public string ImageLocalPath { get; set; }
     }
 }

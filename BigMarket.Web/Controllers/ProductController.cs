@@ -101,15 +101,18 @@ namespace BigMarket.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> ProductEdit(ProductDto model)
         {
-            ResponseDto response = await _productService.UpdateProductAsync(model);
-            if (response != null && response.IsSuccess)
+            if (ModelState.IsValid)
             {
-                TempData[MessageType.Success] = "Product updated successfully";
-                return RedirectToAction(nameof(ProductIndex));
-            }
-            else
-            {
-                TempData[MessageType.Error] = response?.Message;
+                ResponseDto response = await _productService.UpdateProductAsync(model);
+                if (response != null && response.IsSuccess)
+                {
+                    TempData[MessageType.Success] = "Product updated successfully";
+                    return RedirectToAction(nameof(ProductIndex));
+                }
+                else
+                {
+                    TempData[MessageType.Error] = response?.Message;
+                }
             }
             return View(model);
         }
