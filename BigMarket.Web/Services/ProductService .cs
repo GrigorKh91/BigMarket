@@ -42,16 +42,6 @@ namespace BigMarket.Web.Services
             return await _baseService.SendAsync(request);
         }
 
-        public async Task<ResponseDto> GetProductAsync(string ProductCode)
-        {
-            var request = new RequestDto()
-            {
-                ApiType = SD.ApiType.GET,
-                Url = SD.ProductAPIBase + "/api/product/GetByCode/" + ProductCode
-            };
-            return await _baseService.SendAsync(request);
-        }
-
         public async Task<ResponseDto> GetProductByIdAsync(int id)
         {
             var request = new RequestDto()
