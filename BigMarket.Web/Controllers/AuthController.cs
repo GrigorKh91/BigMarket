@@ -66,7 +66,7 @@ namespace BigMarket.Web.Controllers
             ResponseDto assignRole;
             if (result != null && result.IsSuccess)
             {
-                if (string.IsNullOrEmpty(obj.Role))
+                //if (string.IsNullOrEmpty(obj.Role)) // TODO check it
                 {
                     obj.Role = SD.RolaCastomer;
                 }
