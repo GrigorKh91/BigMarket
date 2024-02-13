@@ -21,7 +21,7 @@ namespace BigMarket.Services.AuthAPI.Service
             {
                  new (JwtRegisteredClaimNames.Email,applicationUser.Email),
                  new (JwtRegisteredClaimNames.Sub,applicationUser.Id),
-                 new (JwtRegisteredClaimNames.Name,applicationUser.Email)
+                 new (JwtRegisteredClaimNames.Name,applicationUser.Name)
             };
             claimList.AddRange(rols.Select(role => new Claim(ClaimTypes.Role, role)));
             var tokenDescriptor = new SecurityTokenDescriptor
