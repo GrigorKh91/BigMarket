@@ -102,7 +102,7 @@
 
     // ShoppingCart API
     {
-      "DownstreamPathTemplate": "/api/cart/GetCart/{id}",
+      "DownstreamPathTemplate": "/api/cart/GetCart/{userId}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -110,7 +110,7 @@
           "Port": 7003
         }
       ],
-      "UpstreamPathTemplate": "/api/cart/GetCart/{id}",
+      "UpstreamPathTemplate": "/api/cart/GetCart/{userId}",
       "UpstreamHttpMethod": [ "GET" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer"
@@ -195,7 +195,7 @@
       }
     },
     {
-      "DownstreamPathTemplate": "/api/order/GetOrders?userId=' ' ",
+      "DownstreamPathTemplate": "/api/order/GetOrders?userId=' '",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {

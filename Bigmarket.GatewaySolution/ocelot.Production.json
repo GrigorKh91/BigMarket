@@ -95,14 +95,14 @@
 
     // ShoppingCart API
     {
-      "DownstreamPathTemplate": "/api/cart/GetCart/{id}",
+      "DownstreamPathTemplate": "/api/cart/GetCart/{userId}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
           "Host": "bigmarketshoppingcartapi.azurewebsites.net"
         }
       ],
-      "UpstreamPathTemplate": "/api/cart/GetCart/{id}",
+      "UpstreamPathTemplate": "/api/cart/GetCart/{userId}",
       "UpstreamHttpMethod": [ "GET" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer"

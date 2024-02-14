@@ -37,7 +37,7 @@ namespace BigMarket.Web.Services
             var request = new RequestDto()
             {
                 ApiType = SD.ApiType.GET,
-                Url = SD.OrderAPIBase + $"/api/order/GetOrders?userId={userId}"
+                Url = SD.OrderAPIBase + $"/api/order/GetOrders/{userId}"
             };
             return await _baseService.SendAsync(request);
         }
