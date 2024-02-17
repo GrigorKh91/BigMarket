@@ -29,7 +29,7 @@
       }
     },
     {
-      "DownstreamPathTemplate": "/api/product",
+      "DownstreamPathTemplate": "/api/product/",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -37,7 +37,7 @@
           "Port": 7000
         }
       ],
-      "UpstreamPathTemplate": "/api/product",
+      "UpstreamPathTemplate": "/api/product/",
       "UpstreamHttpMethod": [ "POST", "PUT" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer"
@@ -73,7 +73,7 @@
       }
     },
     {
-      "DownstreamPathTemplate": "/api/coupon",
+      "DownstreamPathTemplate": "/api/coupon/",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -81,7 +81,7 @@
           "Port": 7001
         }
       ],
-      "UpstreamPathTemplate": "/api/coupon",
+      "UpstreamPathTemplate": "/api/coupon/",
       "UpstreamHttpMethod": [ "POST", "PUT" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer"
