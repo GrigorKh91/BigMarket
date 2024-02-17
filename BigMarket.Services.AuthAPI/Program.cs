@@ -1,6 +1,7 @@
 using BigMarket.MessageBus;
 using BigMarket.Services.AuthAPI.Data;
 using BigMarket.Services.AuthAPI.Models;
+using BigMarket.Services.AuthAPI.RabbitMQSender;
 using BigMarket.Services.AuthAPI.Service;
 using BigMarket.Services.AuthAPI.Services.IServices;
 using Microsoft.AspNetCore.Identity;
@@ -21,7 +22,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
                           .AddDefaultTokenProviders();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
-builder.Services.AddScoped<IMessageBus, MessageBus>();
+builder.Services.AddScoped<IRabbitMQAuthMessageSender, RabbitMQAuthMessageSender>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

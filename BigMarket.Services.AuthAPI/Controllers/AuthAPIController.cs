@@ -1,5 +1,6 @@
 ﻿using BigMarket.MessageBus;
 using BigMarket.Services.AuthAPI.Models.Dto;
+using BigMarket.Services.AuthAPI.RabbitMQSender;
 using BigMarket.Services.AuthAPI.Services.IServices;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,11 +9,11 @@ namespace BigMarket.Services.AuthAPI.Controllers
     [Route("api/auth")]
     [ApiController]
     public class AuthAPIController(IAuthService authService,
-                                                       IMessageBus messageBus,
+                                                       IRabbitMQAuthMessageSender messageBus,
                                                         IConfiguration configuration) : ControllerBase
     {
         private readonly IAuthService _authService = authService;
-        private readonly IMessageBus _messageBus = messageBus;
+        private readonly IRabbitMQAuthMessageSender _messageBus = messageBus;
         private readonly IConfiguration _configuration = configuration;
         private readonly ResponseDto _response = new();
 
@@ -27,7 +28,7 @@ namespace BigMarket.Services.AuthAPI.Controllers
                 return BadRequest(_response);
             }
             string topic_queue_Name = _configuration.GetValue<string>("TopikAndQueueNames:RegisterUserQueue");
-            await _messageBus.PublishMessageAsync(model.Email, topic_queue_Name);
+             _messageBus.SendMessage(model.Email, topic_queue_Name);
             return Ok(_response);
         }
 

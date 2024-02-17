@@ -1,6 +1,7 @@
 using BigMarket.Services.EmailAPI.Data;
 using BigMarket.Services.EmailAPI.Extensions;
-using BigMarket.Services.EmailAPI.Messaging;
+using BigMarket.Services.EmailAPI.Messaging.AzureServiceBus;
+using BigMarket.Services.EmailAPI.Messaging.RabbitMQ;
 using BigMarket.Services.EmailAPI.Services;
 using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +15,8 @@ builder.Services.AddDbContext<AppDbContext>(optiion =>
 var optionBuilder = new DbContextOptionsBuilder<AppDbContext>();
 optionBuilder.UseSqlServer(builder.Configuration.GetConnectionString("EmailConnection"));
 builder.Services.AddSingleton(new EmailService(optionBuilder.Options)); // Becouse EmailService is singleton
+
+builder.Services.AddHostedService<RabbitMQAuthConsumer>();
 
 builder.Services.AddSingleton<IAzureServiceBusConsumer, AzureServiceBusConsumer>();
 builder.Services.AddControllers();

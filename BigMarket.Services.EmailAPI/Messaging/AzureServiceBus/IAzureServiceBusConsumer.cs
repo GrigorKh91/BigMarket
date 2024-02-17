@@ -1,4 +1,4 @@
-﻿namespace BigMarket.Services.EmailAPI.Messaging
+﻿namespace BigMarket.Services.EmailAPI.Messaging.AzureServiceBus
 {
     public interface IAzureServiceBusConsumer
     {

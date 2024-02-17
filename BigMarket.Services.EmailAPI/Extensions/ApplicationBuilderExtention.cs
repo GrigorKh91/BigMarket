@@ -1,4 +1,4 @@
-﻿using BigMarket.Services.EmailAPI.Messaging;
+﻿using BigMarket.Services.EmailAPI.Messaging.AzureServiceBus;
 
 namespace BigMarket.Services.EmailAPI.Extensions
 {

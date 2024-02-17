@@ -5,7 +5,7 @@ using BigMarket.Services.EmailAPI.Services;
 using Newtonsoft.Json;
 using System.Text;
 
-namespace BigMarket.Services.EmailAPI.Messaging
+namespace BigMarket.Services.EmailAPI.Messaging.AzureServiceBus
 {
     public sealed class AzureServiceBusConsumer : IAzureServiceBusConsumer
     {
