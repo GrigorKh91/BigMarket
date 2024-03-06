@@ -33,7 +33,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bigmarket.GatewaySolution",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{F75DB3BB-8D74-4E37-8D80-57F2D0C9C0F1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Product", "Tests.Product\Tests.Product.csproj", "{32A37AE8-7A51-4C78-9C3D-0581165FF065}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Products", "Tests.Product\Tests.Products.csproj", "{32A37AE8-7A51-4C78-9C3D-0581165FF065}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

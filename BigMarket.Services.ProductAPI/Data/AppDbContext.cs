@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BigMarket.Services.ProductAPI.Data
 {
-    public sealed class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
+    public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
     {
-        public DbSet<Product> Products { get; set; }
+        public virtual DbSet<Product> Products { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

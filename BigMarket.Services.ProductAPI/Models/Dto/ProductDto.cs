@@ -10,5 +10,28 @@
         public string ImageUrl { get; set; }
         public string ImageLocalPath { get; set; }
         public IFormFile Image { get; set; }
+
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+            {
+                return false;
+            }
+
+            if (obj.GetType() != typeof(ProductDto))
+            {
+                return false;
+            }
+            ProductDto product_to_compare = (ProductDto)obj;
+
+            return ProductId == product_to_compare.ProductId && Name == product_to_compare.Name;
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
     }
 }

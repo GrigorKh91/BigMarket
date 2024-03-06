@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Newtonsoft.Json;
+using System.Linq;
 
 namespace BigMarket.Web.Controllers
 {
@@ -56,7 +57,9 @@ namespace BigMarket.Web.Controllers
                 StripeRequestDto stripeResponseResult = JsonConvert.DeserializeObject<StripeRequestDto>
                (Convert.ToString(stripeResponse.Result));
 
-                Response.Headers.Add("Location", stripeResponseResult.SessionUrl); //TODU check  
+
+                Response.Headers.Location = stripeResponseResult.SessionUrl; //TODU check
+
                 return new StatusCodeResult(303);
             }
             return View();

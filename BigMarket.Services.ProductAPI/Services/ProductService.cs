@@ -48,6 +48,8 @@ namespace BigMarket.Services.ProductAPI.Services
         {
             try
             {
+                ArgumentNullException.ThrowIfNull(productDto);
+
                 Product product = _mapper.Map<Product>(productDto);
                 await _db.Products.AddAsync(product);
                 await _db.SaveChangesAsync();
@@ -90,7 +92,7 @@ namespace BigMarket.Services.ProductAPI.Services
                     if (!string.IsNullOrEmpty(product.ImageLocalPath))
                     {
                         var oltFilePathDirectory = Path.Combine(Directory.GetCurrentDirectory(), product.ImageLocalPath);
-                        FileInfo file = new FileInfo(oltFilePathDirectory);
+                        FileInfo file = new(oltFilePathDirectory);
                         if (file.Exists)
                         {
                             file.Delete();
@@ -128,7 +130,7 @@ namespace BigMarket.Services.ProductAPI.Services
                 if (!string.IsNullOrEmpty(product.ImageLocalPath))
                 {
                     var oltFilePathDirectory = Path.Combine(Directory.GetCurrentDirectory(), product.ImageLocalPath);
-                    FileInfo file = new FileInfo(oltFilePathDirectory);
+                    FileInfo file = new(oltFilePathDirectory);
                     if (file.Exists)
                     {
                         file.Delete();
