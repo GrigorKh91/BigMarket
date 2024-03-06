@@ -2,6 +2,8 @@ using AutoMapper;
 using BigMarket.Services.ProductAPI;
 using BigMarket.Services.ProductAPI.Data;
 using BigMarket.Services.ProductAPI.Extensions;
+using BigMarket.Services.ProductAPI.Services;
+using BigMarket.Services.ProductAPI.Services.IServices;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +17,7 @@ builder.Services.AddDbContext<AppDbContext>(optiion =>
 IMapper mapper = MappingConfig.RegisterMaps().CreateMapper();
 builder.Services.AddSingleton(mapper);
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddScoped<IProductService, ProductService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
