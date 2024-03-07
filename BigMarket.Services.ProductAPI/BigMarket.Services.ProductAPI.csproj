@@ -23,4 +23,9 @@
     <Folder Include="wwwroot\ProductImages\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="Tests.Products" />
+  </ItemGroup>
+
+
 </Project>

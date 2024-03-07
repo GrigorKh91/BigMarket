@@ -57,10 +57,14 @@ app.Run();
 
 void ApplayMigration()
 {
-    using var scope = app.Services.CreateScope();
-    var _db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    if (_db.Database.GetPendingMigrations().Any())
+    if (!builder.Environment.IsEnvironment("Test"))
     {
-        _db.Database.Migrate();
+        using var scope = app.Services.CreateScope();
+        var _db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        if (_db.Database.GetPendingMigrations().Any())
+        {
+            _db.Database.Migrate();
+        } 
     }
 }
+public partial class Program { } //make the auto-generated Program accessible programmatically
