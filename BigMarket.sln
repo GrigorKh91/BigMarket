@@ -37,7 +37,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Products", "Tests.Pro
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{5849512D-3869-48D6-9957-8107694615E5}"
 	ProjectSection(SolutionItems) = preProject
-		..\..\..\project info.txt = ..\..\..\project info.txt
+		TextFile1.txt = TextFile1.txt
 	EndProjectSection
 EndProject
 Global
