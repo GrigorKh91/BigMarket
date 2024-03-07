@@ -7,6 +7,7 @@ using BigMarket.Services.OrderAPI.Services.IServices;
 using BigMarket.Services.OrderAPI.Utility;
 using Microsoft.EntityFrameworkCore;
 using Stripe;
+using BigMarket.Services.OrderAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +21,8 @@ IMapper mapper = MappingConfig.RegisterMaps().CreateMapper();
 builder.Services.AddSingleton(mapper);
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IProductService, BigMarket.Services.OrderAPI.Service.ProductService>();
+builder.Services.AddScoped<IOrderService, OrderServices>();
+builder.Services.AddScoped<IStripeService, StripeService>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<BackendApiAuthenticationHttpClientHandler>();
 builder.Services.AddScoped<IMessageBus, MessageBus>();
