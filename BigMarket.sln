@@ -35,6 +35,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{F75DB3BB
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Products", "Tests.Product\Tests.Products.csproj", "{32A37AE8-7A51-4C78-9C3D-0581165FF065}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{5849512D-3869-48D6-9957-8107694615E5}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\project info.txt = ..\..\..\project info.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
