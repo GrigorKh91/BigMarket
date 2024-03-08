@@ -39,7 +39,7 @@ namespace BigMarket.Services.OrderAPI.Services
             {
                 var discountsObj = new List<SessionDiscountOptions>()
                     {
-                        new SessionDiscountOptions()
+                        new ()
                         {
                            Coupon=stripeRequestDto.OrderHeader.CouponCode
                         }

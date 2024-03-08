@@ -2,6 +2,7 @@
 using BigMarket.Services.CouponAPI.Data;
 using BigMarket.Services.CouponAPI.Models;
 using BigMarket.Services.CouponAPI.Models.Dto;
+using BigMarket.Services.CouponAPI.Services.IServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,88 +12,37 @@ namespace BigMarket.Services.CouponAPI.Controllers
 {
     [Route("api/coupon")]
     [ApiController]
-    [Authorize]
-    public class CouponAPIController(AppDbContext db, IMapper mapper) : ControllerBase
+    //[Authorize]
+    public class CouponAPIController(ICouponService couponService) : ControllerBase
     {
-        private readonly AppDbContext _db = db;
-        private readonly ResponseDto _response = new();
-        private readonly IMapper _mapper = mapper;
+        private readonly ICouponService _couponService = couponService;
 
         [HttpGet]
         public async Task<ResponseDto> Get()
         {
-            try
-            {
-                IEnumerable<Coupon> couponList = await _db.Coupons.ToListAsync();
-                _response.Result = _mapper.Map<IEnumerable<CouponDto>>(couponList);
-            }
-            catch (Exception ex)
-            {
-                _response.IsSuccess = false;
-                _response.Message = ex.Message;
-            }
+            ResponseDto _response = await _couponService.GetAsync();
             return _response;
         }
 
         [HttpGet("{id:int}")]
         public async Task<ResponseDto> Get(int id)
         {
-            try
-            {
-                var coupon = await _db.Coupons.FirstAsync(c => c.CouponId == id);
-                _response.Result = _mapper.Map<CouponDto>(coupon);
-            }
-            catch (Exception ex)
-            {
-                _response.IsSuccess = false;
-                _response.Message = ex.Message;
-            }
+            ResponseDto _response = await _couponService.GetAsync(id);
             return _response;
         }
 
         [HttpGet("GetByCode/{code}")]
         public async Task<ResponseDto> GetByCode(string code)
         {
-            try
-            {
-                var coupon = await _db.Coupons.FirstAsync(c => c.CouponCode == code);
-                _response.Result = _mapper.Map<CouponDto>(coupon);
-            }
-            catch (Exception ex)
-            {
-                _response.IsSuccess = false;
-                _response.Message = ex.Message;
-            }
+            ResponseDto _response = await _couponService.GetByCodeAsync(code);
             return _response;
         }
 
         [HttpPost]
-        [Authorize(Roles = "ADMIN")]  // TODO change from hatd code
+       // [Authorize(Roles = "ADMIN")]  // TODO change from hatd code
         public async Task<ResponseDto> Post([FromBody] CouponDto couponDto)
         {
-            try
-            {
-                Coupon coupon = _mapper.Map<Coupon>(couponDto);
-                await _db.Coupons.AddAsync(coupon);
-                await _db.SaveChangesAsync();
-
-                var options = new Stripe.CouponCreateOptions
-                {
-                    AmountOff = (long)(couponDto.DiscountAmount * 100),
-                    Name = couponDto.CouponCode,
-                    Currency = "usd",
-                    Id = couponDto.CouponCode
-                };
-                var service = new Stripe.CouponService();
-                service.Create(options);
-
-                _response.Result = couponDto;
-            }
-            catch (Exception ex)
-            {
-                _response.IsSuccess = false;
-                _response.Message = ex.Message;
-            }
+            ResponseDto _response = await _couponService.CreateAsync(couponDto);
             return _response;
         }
 
@@ -100,18 +50,7 @@ namespace BigMarket.Services.CouponAPI.Controllers
         [Authorize(Roles = "ADMIN")]  // TODO change from hatd code
         public ResponseDto Put([FromBody] CouponDto couponDto)
         {
-            try
-            {
-                Coupon coupon = _mapper.Map<Coupon>(couponDto);
-                _db.Coupons.Update(coupon);  // TODO check need or not async
-                _db.SaveChanges();
-                _response.Result = couponDto;
-            }
-            catch (Exception ex)
-            {
-                _response.IsSuccess = false;
-                _response.Message = ex.Message;
-            }
+            ResponseDto _response = _couponService.Update(couponDto);
             return _response;
         }
 
@@ -120,20 +59,7 @@ namespace BigMarket.Services.CouponAPI.Controllers
         [Authorize(Roles = "ADMIN")]  // TODO change from hatd code
         public ResponseDto Delete(int id)
         {
-            try
-            {
-                Coupon coupon = _db.Coupons.First(c => c.CouponId == id);
-                _db.Coupons.Remove(coupon); // TODO check need or not async
-                _db.SaveChanges();
-
-                var service = new Stripe.CouponService();
-                service.Delete(coupon.CouponCode);
-            }
-            catch (Exception ex)
-            {
-                _response.IsSuccess = false;
-                _response.Message = ex.Message;
-            }
+            ResponseDto _response = _couponService.Delete(id);
             return _response;
         }
     }

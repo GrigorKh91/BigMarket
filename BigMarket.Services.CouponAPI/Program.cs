@@ -2,12 +2,22 @@ using AutoMapper;
 using BigMarket.Services.CouponAPI;
 using BigMarket.Services.CouponAPI.Data;
 using BigMarket.Services.CouponAPI.Extensions;
+using BigMarket.Services.CouponAPI.Services.IServices;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 using Stripe;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+//Serilog
+builder.Host.UseSerilog((HostBuilderContext context, IServiceProvider services, LoggerConfiguration loggerConfiguration) =>
+{
+    loggerConfiguration
+    .ReadFrom.Configuration(context.Configuration) //read configuration settings from built-in IConfiguration
+    .ReadFrom.Services(services); //read out current app's services and make them available to serilog
+});
 
 builder.Services.AddDbContext<AppDbContext>(optiion =>
 {
@@ -16,6 +26,7 @@ builder.Services.AddDbContext<AppDbContext>(optiion =>
 IMapper mapper = MappingConfig.RegisterMaps().CreateMapper();
 builder.Services.AddSingleton(mapper);
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddScoped<ICouponService, BigMarket.Services.CouponAPI.Services.CouponService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
