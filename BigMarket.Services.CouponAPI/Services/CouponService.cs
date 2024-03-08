@@ -37,8 +37,8 @@ namespace BigMarket.Services.CouponAPI.Services
         {
             try
             {
-                _logger.LogInformation("Get action of CouponService**********************");
-                _logger.LogInformation($"id :{id} *******************");
+               // _logger.LogInformation("Get action of CouponService**********************");
+               // _logger.LogInformation($"id :{id} *******************");
                 var coupon = await _db.Coupons.FirstAsync(c => c.CouponId == id);
                 _response.Result = _mapper.Map<CouponDto>(coupon);
             }
@@ -69,7 +69,7 @@ namespace BigMarket.Services.CouponAPI.Services
         {
             try
             {
-                using (Operation.Time("Time for create coupon to database"))
+               // using (Operation.Time("Time for create coupon to database"))
                 {
                     Coupon coupon = _mapper.Map<Coupon>(couponDto);
                     await _db.Coupons.AddAsync(coupon);
