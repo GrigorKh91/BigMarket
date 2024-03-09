@@ -28,3 +28,4 @@ x unit  with EntityFrameworkCoreMock.Moq
 integration test
 Logging (Serilog)
 Filters
+ExceptionHandling
