@@ -1,18 +1,14 @@
-﻿using AutoMapper;
-using BigMarket.Services.CouponAPI.Data;
-using BigMarket.Services.CouponAPI.Models;
-using BigMarket.Services.CouponAPI.Models.Dto;
+﻿using BigMarket.Services.CouponAPI.Models.Dto;
 using BigMarket.Services.CouponAPI.Services.IServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 
 namespace BigMarket.Services.CouponAPI.Controllers
 {
     [Route("api/coupon")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class CouponAPIController(ICouponService couponService) : ControllerBase
     {
         private readonly ICouponService _couponService = couponService;
@@ -39,7 +35,7 @@ namespace BigMarket.Services.CouponAPI.Controllers
         }
 
         [HttpPost]
-       // [Authorize(Roles = "ADMIN")]  // TODO change from hatd code
+        [Authorize(Roles = "ADMIN")]  // TODO change from hatd code
         public async Task<ResponseDto> Post([FromBody] CouponDto couponDto)
         {
             ResponseDto _response = await _couponService.CreateAsync(couponDto);
