@@ -2,7 +2,7 @@ using AutoMapper;
 using BigMarket.Services.CouponAPI;
 using BigMarket.Services.CouponAPI.Data;
 using BigMarket.Services.CouponAPI.Extensions;
-using BigMarket.Services.CouponAPI.Filters.ActionFilters;
+using BigMarket.Services.CouponAPI.Middleware;
 using BigMarket.Services.CouponAPI.Services.IServices;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
@@ -29,11 +29,12 @@ builder.Services.AddSingleton(mapper);
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<ICouponService, BigMarket.Services.CouponAPI.Services.CouponService>();
 
-var logger = builder.Services.BuildServiceProvider().GetRequiredService<ILogger<ResponseHeaderActionFilter>>();
-builder.Services.AddControllers(options =>
-{
-    options.Filters.Add(new ResponseHeaderActionFilter(logger, "My-Key-From-Global", "My-ValueTask-from-Global"));
-});// Add Global Filter
+builder.Services.AddControllers();
+//var logger = builder.Services.BuildServiceProvider().GetRequiredService<ILogger<ResponseHeaderActionFilter>>();
+//builder.Services.AddControllers(options =>
+//{
+//    options.Filters.Add(new ResponseHeaderActionFilter(logger, "My-Key-From-Global", "My-ValueTask-from-Global"));
+//});// Add Global Filter
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -58,6 +59,7 @@ else
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "Coupon API");
         c.RoutePrefix = string.Empty;
     });
+    app.UseExceptionHandlingMiddleware();
 }
 
 
