@@ -21,9 +21,10 @@ RabbitMQ
 Gateways in Microservices
 Implementing Ocelot gateway
 Swagger Open API implementation
-N-Layer implementation with Repository Pattern
+N-Layer implementation 
 ASPNET Core Web Application with Bootstrap 5
 Entity Framework Core with SQL Server Database
 x unit  with EntityFrameworkCoreMock.Moq
 integration test
 Logging (Serilog)
+Filters

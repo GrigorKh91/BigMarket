@@ -1,4 +1,5 @@
-﻿using BigMarket.Services.CouponAPI.Models.Dto;
+﻿using BigMarket.Services.CouponAPI.Filters.ResourceFilters;
+using BigMarket.Services.CouponAPI.Models.Dto;
 using BigMarket.Services.CouponAPI.Services.IServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -8,12 +9,16 @@ namespace BigMarket.Services.CouponAPI.Controllers
 {
     [Route("api/coupon")]
     [ApiController]
+    //[TypeFilter(typeof(ResponseHeaderActionFilter), Arguments = new object[] { "Custom-Key-From-Controller", "Custom-Value-From-Controller" })]
     [Authorize]
     public class CouponAPIController(ICouponService couponService) : ControllerBase
     {
         private readonly ICouponService _couponService = couponService;
 
         [HttpGet]
+        //[TypeFilter(typeof(ResponseHeaderActionFilter), Arguments = new object[] { "Custom-Key-From-Action", "Custom-Value-From-Action" })]
+        //[TypeFilter(typeof(CouponListResultFilter))]
+        [TypeFilter(typeof(FeatureDisabledResourceFilter), Arguments = new object[] { false })]
         public async Task<ResponseDto> Get()
         {
             ResponseDto _response = await _couponService.GetAsync();
@@ -21,6 +26,7 @@ namespace BigMarket.Services.CouponAPI.Controllers
         }
 
         [HttpGet("{id:int}")]
+        //[TypeFilter(typeof(HandleExceptionFilter))]
         public async Task<ResponseDto> Get(int id)
         {
             ResponseDto _response = await _couponService.GetAsync(id);
@@ -35,6 +41,7 @@ namespace BigMarket.Services.CouponAPI.Controllers
         }
 
         [HttpPost]
+       // [TypeFilter(typeof(CouponCreateFilter))]
         [Authorize(Roles = "ADMIN")]  // TODO change from hatd code
         public async Task<ResponseDto> Post([FromBody] CouponDto couponDto)
         {
