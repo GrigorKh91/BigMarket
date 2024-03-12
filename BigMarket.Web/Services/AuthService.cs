@@ -42,5 +42,17 @@ namespace BigMarket.Web.Services
             };
             return await _baseService.SendAsync(request, withBearer: false);
         }
+
+        public async Task<ResponseDto> IsEmailAlreadyRegistered(string email)
+        {
+            var request = new RequestDto()
+            {
+                ApiType = SD.ApiType.POST,
+                Data = email,
+                Url = SD.AuthAPIBase + "/api/auth/IsEmailAlreadyRegistered"
+            };
+            return await _baseService.SendAsync(request, withBearer: false);
+        }
+
     }
 }

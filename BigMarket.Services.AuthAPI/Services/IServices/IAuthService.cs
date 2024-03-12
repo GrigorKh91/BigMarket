@@ -7,5 +7,6 @@ namespace BigMarket.Services.AuthAPI.Services.IServices
         Task<string> Register(RegistrationRequestDto registrationRequestDto);
         Task<LoginResponseDto> Login(LoginRequestDto loginRequestDto);
         Task<bool> AssignRole(string email, string rolename);
+        Task<bool> IsEmailAlreadyRegistered(string email);
     }
 }

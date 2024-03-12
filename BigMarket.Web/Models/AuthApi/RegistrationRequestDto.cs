@@ -1,10 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace BigMarket.Web.Models.AuthAPI
 {
     public sealed class RegistrationRequestDto
     {
         [Required]
+        [Remote(action: "IsEmailAlreadyRegistered", controller: "Auth", ErrorMessage = "Email is already is use")]
         public string Email { get; set; }
 
         [Required]

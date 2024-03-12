@@ -57,5 +57,14 @@ namespace BigMarket.Services.AuthAPI.Controllers
             }
             return Ok(_response);
         }
+
+        [HttpPost("IsEmailAlreadyRegistered")]
+        public async Task<IActionResult> IsEmailAlreadyRegistered([FromBody] string email)
+        {
+            var isEmailFree = await _authService.IsEmailAlreadyRegistered(email);
+            _response.Result = isEmailFree;
+            return Ok(_response);
+        }
+
     }
 }

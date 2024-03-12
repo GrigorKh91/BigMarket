@@ -50,7 +50,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-app.UseAuthentication();
+app.UseAuthentication();  // Reading Identity cookie
 app.UseAuthorization();
 
 app.MapControllerRoute(

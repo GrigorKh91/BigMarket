@@ -95,6 +95,19 @@ namespace BigMarket.Web.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+
+        public async Task<IActionResult> IsEmailAlreadyRegistered(string email)
+        {
+            ResponseDto responseDto = await _authService.IsEmailAlreadyRegistered(email);
+            if (responseDto != null && responseDto.IsSuccess)
+            {
+                string result = Convert.ToString(responseDto.Result).ToLower();
+                bool isEmailFree = JsonConvert.DeserializeObject<bool>(result);
+                return Json(isEmailFree);
+            }
+            return Json(false);
+        }
+
         private async Task SignInUser(LoginResponseDto model)
         {
             var handler = new JwtSecurityTokenHandler();

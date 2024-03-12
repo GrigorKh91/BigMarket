@@ -18,7 +18,7 @@ namespace BigMarket.Services.AuthAPI.Service
 
         public async Task<bool> AssignRole(string email, string roleName)
         {
-            var user = _db.ApplicationUsers.FirstOrDefault(u => u.Email==email);
+            var user = _db.ApplicationUsers.FirstOrDefault(u => u.Email == email);
             if (user != null)
             {
                 bool existRole = await _roleManager.RoleExistsAsync(roleName);
@@ -58,6 +58,16 @@ namespace BigMarket.Services.AuthAPI.Service
                 Token = token
             };
             return loginResponseDto;
+        }
+
+        public async Task<bool> IsEmailAlreadyRegistered(string email)
+        {
+            ApplicationUser user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+            {
+                return true;
+            }
+            return false;
         }
 
         public async Task<string> Register(RegistrationRequestDto registrationRequestDto) // TODO add nullcheck
