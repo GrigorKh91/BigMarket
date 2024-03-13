@@ -53,6 +53,7 @@ app.UseRouting();
 app.UseAuthentication();  // Reading Identity cookie
 app.UseAuthorization();
 
+// Conventional Routing
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
