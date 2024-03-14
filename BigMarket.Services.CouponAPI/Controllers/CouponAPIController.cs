@@ -22,7 +22,8 @@ namespace BigMarket.Services.CouponAPI.Controllers
         [HttpGet]
         //[TypeFilter(typeof(ResponseHeaderActionFilter), Arguments = new object[] { "Custom-Key-From-Action", "Custom-Value-From-Action" })]
         //[TypeFilter(typeof(CouponListResultFilter))]
-        [TypeFilter(typeof(FeatureDisabledResourceFilter), Arguments = new object[] { false })]
+        //[TypeFilter(typeof(FeatureDisabledResourceFilter), Arguments = new object[] { false })]
+        // [Produces("application/xml")]
         public async Task<ResponseDto> Get()
         {
             ResponseDto _response = await _couponService.GetAsync();
@@ -45,7 +46,7 @@ namespace BigMarket.Services.CouponAPI.Controllers
         }
 
         [HttpPost]
-       // [TypeFilter(typeof(CouponCreateFilter))]
+        // [TypeFilter(typeof(CouponCreateFilter))]
         [Authorize(Roles = "ADMIN")]  // TODO change from hatd code
         public async Task<ResponseDto> Post([FromBody] CouponDto couponDto)
         {

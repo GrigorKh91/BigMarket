@@ -4,6 +4,7 @@ using BigMarket.Services.CouponAPI.Data;
 using BigMarket.Services.CouponAPI.Extensions;
 using BigMarket.Services.CouponAPI.Middleware;
 using BigMarket.Services.CouponAPI.Services.IServices;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Stripe;
@@ -29,7 +30,12 @@ builder.Services.AddSingleton(mapper);
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<ICouponService, BigMarket.Services.CouponAPI.Services.CouponService>();
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add(new ProducesAttribute("application/json"));
+    options.Filters.Add(new ConsumesAttribute("application/json"));
+})
+ .AddXmlSerializerFormatters();
 //var logger = builder.Services.BuildServiceProvider().GetRequiredService<ILogger<ResponseHeaderActionFilter>>();
 //builder.Services.AddControllers(options =>
 //{
