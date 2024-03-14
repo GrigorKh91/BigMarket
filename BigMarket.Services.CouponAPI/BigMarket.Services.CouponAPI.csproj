@@ -5,6 +5,8 @@
     <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <InvariantGlobalization>false</InvariantGlobalization>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <DocumentationFile>coupon.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

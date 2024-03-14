@@ -40,6 +40,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
 builder.AddSwaggerConfiguration();
+
 builder.AddAppAuthentication();
 
 builder.Services.AddAuthentication();

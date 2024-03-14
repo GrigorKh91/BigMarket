@@ -15,6 +15,10 @@ namespace BigMarket.Services.CouponAPI.Controllers
     {
         private readonly ICouponService _couponService = couponService;
 
+        /// <summary>
+        ///  To get list of coupons from 'coupon' table
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         //[TypeFilter(typeof(ResponseHeaderActionFilter), Arguments = new object[] { "Custom-Key-From-Action", "Custom-Value-From-Action" })]
         //[TypeFilter(typeof(CouponListResultFilter))]

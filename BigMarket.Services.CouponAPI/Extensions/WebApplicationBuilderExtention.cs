@@ -35,8 +35,12 @@ namespace BigMarket.Services.CouponAPI.Extensions
 
         internal static WebApplicationBuilder AddSwaggerConfiguration(this WebApplicationBuilder builder)
         {
+
+
             builder.Services.AddSwaggerGen(option =>
             {
+                option.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "coupon.xml"));
+
                 option.AddSecurityDefinition(name: JwtBearerDefaults.AuthenticationScheme, securityScheme: new OpenApiSecurityScheme
                 {
                     Name = "Authorization",

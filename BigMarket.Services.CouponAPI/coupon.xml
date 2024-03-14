@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>BigMarket.Services.CouponAPI</name>
+    </assembly>
+    <members>
+        <member name="M:BigMarket.Services.CouponAPI.Controllers.CouponAPIController.Get">
+            <summary>
+             To get list of coupons from 'coupon' table
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:BigMarket.Services.CouponAPI.Migrations.AddCouponToDb">
+            <inheritdoc />
+        </member>
+        <member name="M:BigMarket.Services.CouponAPI.Migrations.AddCouponToDb.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:BigMarket.Services.CouponAPI.Migrations.AddCouponToDb.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:BigMarket.Services.CouponAPI.Migrations.AddCouponToDb.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:BigMarket.Services.CouponAPI.Migrations.SeeCouponTables">
+            <inheritdoc />
+        </member>
+        <member name="M:BigMarket.Services.CouponAPI.Migrations.SeeCouponTables.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:BigMarket.Services.CouponAPI.Migrations.SeeCouponTables.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:BigMarket.Services.CouponAPI.Migrations.SeeCouponTables.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:BigMarket.Services.CouponAPI.Migrations.SeedCouponTables">
+            <inheritdoc />
+        </member>
+        <member name="M:BigMarket.Services.CouponAPI.Migrations.SeedCouponTables.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:BigMarket.Services.CouponAPI.Migrations.SeedCouponTables.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:BigMarket.Services.CouponAPI.Migrations.SeedCouponTables.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:BigMarket.Services.CouponAPI.Migrations.Change_CouponCode_Lenght">
+            <inheritdoc />
+        </member>
+        <member name="M:BigMarket.Services.CouponAPI.Migrations.Change_CouponCode_Lenght.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:BigMarket.Services.CouponAPI.Migrations.Change_CouponCode_Lenght.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:BigMarket.Services.CouponAPI.Migrations.Change_CouponCode_Lenght.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>
