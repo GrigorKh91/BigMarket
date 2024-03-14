@@ -147,5 +147,21 @@ namespace BigMarket.Services.ProductAPI.Services
             }
             return _response;
         }
+
+        public async Task<ResponseDto> GetAllProductsNameAsync()
+        {
+            try
+            {
+                IEnumerable<string> ProductList = await _db.Products.Select(p => p.Name).ToListAsync();
+
+                _response.Result = ProductList;
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.Message = ex.Message;
+            }
+            return _response;
+        }
     }
 }

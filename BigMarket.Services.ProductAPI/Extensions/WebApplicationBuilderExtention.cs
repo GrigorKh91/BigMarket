@@ -37,6 +37,9 @@ namespace BigMarket.Services.ProductAPI.Extensions
         {
             builder.Services.AddSwaggerGen(option =>
             {
+                option.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo() { Title = "Product Web API", Version = "1.0" });
+                option.SwaggerDoc("v2", new Microsoft.OpenApi.Models.OpenApiInfo() { Title = "Product Web API", Version = "2.0" });
+
                 option.AddSecurityDefinition(name: JwtBearerDefaults.AuthenticationScheme, securityScheme: new OpenApiSecurityScheme
                 {
                     Name = "Authorization",
@@ -58,7 +61,16 @@ namespace BigMarket.Services.ProductAPI.Extensions
                         }, Array.Empty<string>()
                     }
                 });
+
             });
+
+            builder.Services.AddVersionedApiExplorer(options =>
+            {
+                options.GroupNameFormat = "'v'VVV"; //v1
+                options.SubstituteApiVersionInUrl = true;
+            });
+
+
             return builder;
         }
 

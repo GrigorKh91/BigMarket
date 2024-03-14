@@ -4,7 +4,10 @@ using BigMarket.Services.ProductAPI.Data;
 using BigMarket.Services.ProductAPI.Extensions;
 using BigMarket.Services.ProductAPI.Services;
 using BigMarket.Services.ProductAPI.Services.IServices;
+using Microsoft.AspNetCore.Mvc.Versioning;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +23,16 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IProductService, ProductService>();
 
 builder.Services.AddControllers();
+
+//Enable versioning in Web API controllers
+builder.Services.AddApiVersioning(config =>
+{
+    config.ApiVersionReader = new UrlSegmentApiVersionReader();
+    config.DefaultApiVersion = new ApiVersion(1, 0);
+    config.AssumeDefaultVersionWhenUnspecified = true;
+});
+
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
@@ -33,7 +46,11 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "1.0");
+        options.SwaggerEndpoint("/swagger/v2/swagger.json", "2.0");
+    }); //creates swagger UI for testing all Web API endpoints / action methods);
 }
 else
 {
@@ -64,7 +81,7 @@ void ApplayMigration()
         if (_db.Database.GetPendingMigrations().Any())
         {
             _db.Database.Migrate();
-        } 
+        }
     }
 }
 public partial class Program { } //make the auto-generated Program accessible programmatically

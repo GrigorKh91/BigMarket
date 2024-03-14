@@ -2,7 +2,7 @@
   "Routes": [
     // PRODUCT API
     {
-      "DownstreamPathTemplate": "/api/product",
+      "DownstreamPathTemplate": "/api/v1/product",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -13,7 +13,7 @@
       "UpstreamHttpMethod": [ "Get" ]
     },
     {
-      "DownstreamPathTemplate": "/api/product/{id}",
+      "DownstreamPathTemplate": "/api/v1/product/{id}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -27,7 +27,7 @@
       }
     },
     {
-      "DownstreamPathTemplate": "/api/product/",
+      "DownstreamPathTemplate": "/api/v1/product/",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {

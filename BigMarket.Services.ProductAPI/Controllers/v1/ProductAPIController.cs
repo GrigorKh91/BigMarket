@@ -3,9 +3,10 @@ using BigMarket.Services.ProductAPI.Services.IServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BigMarket.Services.ProductAPI.Controllers
+namespace BigMarket.Services.ProductAPI.Controllers.v1
 {
-    [Route("api/product")]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/product")]
     [ApiController]
     public class ProductAPIController(IProductService productService) : ControllerBase
     {
