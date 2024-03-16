@@ -40,6 +40,25 @@ builder.AddSwaggerConfiguration();
 builder.AddAppAuthentication();
 
 builder.Services.AddAuthentication();
+
+//CORS: localhost:7000, localhost:5278
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policyBuilder =>
+    {
+        policyBuilder
+        .WithOrigins(builder.Configuration.GetSection("AllowedOrigins7000").Get<string[]>())
+        .WithMethods("GET", "POST", "PUT", "DELETE");
+    });
+
+    options.AddPolicy("5278Client", policyBuilder =>
+    {
+        policyBuilder
+        .WithOrigins(builder.Configuration.GetSection("AllowedOrigins5278").Get<string[]>())
+        .WithMethods("GET");
+    });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -66,6 +85,8 @@ else
 
 app.UseHttpsRedirection();
 app.UseAuthentication();
+
+app.UseCors();
 app.UseAuthorization();
 app.UseStaticFiles();
 app.MapControllers();
