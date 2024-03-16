@@ -1,4 +1,4 @@
-﻿using BigMarket.Services.ProductAPI.Models.Dto;
+﻿using BigMarket.Services.ProductAPI.Core.Models.Dto;
 using BigMarket.Services.ProductAPI.Services.IServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -28,7 +28,7 @@ namespace BigMarket.Services.ProductAPI.Controllers.v1
 
         [HttpPost]
         [Authorize(Roles = "ADMIN")]  // TODO change from had code
-        public async Task<ResponseDto> Post(ProductDto productDto)
+        public async Task<ResponseDto> Post([FromBody]ProductDto productDto)
         {
 
             var baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.Value}{HttpContext.Request.PathBase.Value}";
@@ -38,7 +38,7 @@ namespace BigMarket.Services.ProductAPI.Controllers.v1
 
         [HttpPut]
         [Authorize(Roles = "ADMIN")]  // TODO change from hatd code
-        public ResponseDto Put(ProductDto productDto)
+        public ResponseDto Put([FromBody] ProductDto productDto)
         {
 
             var baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.Value}{HttpContext.Request.PathBase.Value}";

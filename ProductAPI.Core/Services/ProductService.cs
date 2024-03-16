@@ -1,16 +1,16 @@
 ﻿using BigMarket.Services.ProductAPI.Services.IServices;
+using BigMarket.Services.ProductAPI.Core.Models.Dto;
+using BigMarket.Services.ProductAPI.Core.Models;
+using ProductAPI.Core.Services.IServices;
 using AutoMapper;
-using BigMarket.Services.ProductAPI.Data;
-using BigMarket.Services.ProductAPI.Models;
-using BigMarket.Services.ProductAPI.Models.Dto;
-using Microsoft.EntityFrameworkCore;
+
 
 
 namespace BigMarket.Services.ProductAPI.Services
 {
-    public class ProductService(AppDbContext db, IMapper mapper) : IProductService
+    public class ProductService(IProductRepository db, IMapper mapper) : IProductService
     {
-        private readonly AppDbContext _db = db;
+        private readonly IProductRepository _db = db;
         private readonly ResponseDto _response = new();
         private readonly IMapper _mapper = mapper;
 
@@ -18,7 +18,7 @@ namespace BigMarket.Services.ProductAPI.Services
         {
             try
             {
-                IEnumerable<Product> ProductList = await _db.Products.ToListAsync();
+                IEnumerable<Product> ProductList = await _db.GetAllProductsAsync();
                 _response.Result = _mapper.Map<IEnumerable<ProductDto>>(ProductList);
             }
             catch (Exception ex)
@@ -33,7 +33,7 @@ namespace BigMarket.Services.ProductAPI.Services
         {
             try
             {
-                var Product = await _db.Products.FirstAsync(c => c.ProductId == id);
+                var Product = await _db.GetProductByIdAsync(id);
                 _response.Result = _mapper.Map<ProductDto>(Product);
             }
             catch (Exception ex)
@@ -51,8 +51,7 @@ namespace BigMarket.Services.ProductAPI.Services
                 ArgumentNullException.ThrowIfNull(productDto);
 
                 Product product = _mapper.Map<Product>(productDto);
-                await _db.Products.AddAsync(product);
-                await _db.SaveChangesAsync();
+                await _db.CreateProductAsync(product);
                 if (productDto.Image != null)
                 {
                     string fileName = product.ProductId + Path.GetExtension(productDto.Image.FileName);
@@ -69,8 +68,7 @@ namespace BigMarket.Services.ProductAPI.Services
                 {
                     product.ImageUrl = "https://placehold.co/600x400"; // TODO change to some default
                 }
-                _db.Products.Update(product);
-                await _db.SaveChangesAsync();
+                product = _db.UpdateProductAsync(product);
                 _response.Result = _mapper.Map<ProductDto>(product);
             }
             catch (Exception ex)
@@ -110,8 +108,7 @@ namespace BigMarket.Services.ProductAPI.Services
                     product.ImageLocalPath = filePath;
                 }
 
-                _db.Products.Update(product);// TODO check need or not async
-                _db.SaveChanges();
+                product = _db.UpdateProductAsync(product);
                 _response.Result = _mapper.Map<ProductDto>(product);
             }
             catch (Exception ex)
@@ -126,7 +123,7 @@ namespace BigMarket.Services.ProductAPI.Services
         {
             try
             {
-                Product product = await _db.Products.FirstAsync(c => c.ProductId == id);
+                Product product = await _db.GetProductByIdAsync(id);
                 if (!string.IsNullOrEmpty(product.ImageLocalPath))
                 {
                     var oltFilePathDirectory = Path.Combine(Directory.GetCurrentDirectory(), product.ImageLocalPath);
@@ -137,8 +134,7 @@ namespace BigMarket.Services.ProductAPI.Services
                     }
                 }
 
-                _db.Products.Remove(product);// TODO check need or not async
-                _db.SaveChanges();
+                await _db.DeleteProductAsync(id);
             }
             catch (Exception ex)
             {
@@ -152,7 +148,7 @@ namespace BigMarket.Services.ProductAPI.Services
         {
             try
             {
-                IEnumerable<string> ProductList = await _db.Products.Select(p => p.Name).ToListAsync();
+                IEnumerable<string> ProductList = await _db.GetAllProductsNameAsync();
 
                 _response.Result = ProductList;
             }

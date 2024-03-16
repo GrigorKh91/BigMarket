@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace BigMarket.Services.ProductAPI.Models
+namespace BigMarket.Services.ProductAPI.Core.Models
 {
     public sealed class Product
     {

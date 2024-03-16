@@ -1,4 +1,4 @@
-﻿using BigMarket.Services.ProductAPI.Models.Dto;
+﻿using BigMarket.Services.ProductAPI.Core.Models.Dto;
 using BigMarket.Services.ProductAPI.Services.IServices;
 using Microsoft.AspNetCore.Mvc;
 

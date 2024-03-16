@@ -1,11 +1,11 @@
-﻿using BigMarket.Services.ProductAPI.Models;
+﻿using BigMarket.Services.ProductAPI.Core.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace BigMarket.Services.ProductAPI.Data
+namespace ProductAPI.Infrastructure
 {
     public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
     {
-        public virtual DbSet<Product> Products { get; set; }
+         public virtual DbSet<Product> Products { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -48,4 +48,5 @@ namespace BigMarket.Services.ProductAPI.Data
             });
         }
     }
+
 }

@@ -1,4 +1,6 @@
-﻿namespace BigMarket.Services.ProductAPI.Models.Dto
+﻿using Microsoft.AspNetCore.Http;
+
+namespace BigMarket.Services.ProductAPI.Core.Models.Dto
 {
     public sealed class ProductDto
     {

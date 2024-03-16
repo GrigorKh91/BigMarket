@@ -1,4 +1,4 @@
-﻿namespace BigMarket.Services.ProductAPI.Models.Dto
+﻿namespace BigMarket.Services.ProductAPI.Core.Models.Dto
 {
     public sealed class ResponseDto
     {

@@ -1,5 +1,4 @@
-﻿using BigMarket.Services.ProductAPI.Models.Dto;
-
+﻿using BigMarket.Services.ProductAPI.Core.Models.Dto;
 namespace BigMarket.Services.ProductAPI.Services.IServices
 {
     public interface IProductService

@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Testing; 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using BigMarket.Services.ProductAPI.Data;
+using ProductAPI.Infrastructure;
  
 namespace Tests.Products
 {

@@ -1,13 +1,14 @@
-using AutoMapper;
 using BigMarket.Services.ProductAPI;
-using BigMarket.Services.ProductAPI.Data;
 using BigMarket.Services.ProductAPI.Extensions;
 using BigMarket.Services.ProductAPI.Services;
 using BigMarket.Services.ProductAPI.Services.IServices;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
+using ProductAPI.Infrastructure;
+using ProductAPI.Core.Services.IServices;
+using ProductAPI.Infrastructure.Repositories;
+using AutoMapper;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,7 @@ IMapper mapper = MappingConfig.RegisterMaps().CreateMapper();
 builder.Services.AddSingleton(mapper);
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
 builder.Services.AddControllers();
 
